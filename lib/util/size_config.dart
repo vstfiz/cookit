@@ -24,8 +24,8 @@ class SizeConfig {
         globals.isPortrait = true;
       }
     } else {
-      screenWidth = 423.5294196844927;
-      screenHeight = 917.6470759830676;
+      screenWidth = 480.0;
+      screenHeight =1013.33333333333334;
       isPortrait = false;
       globals.isPortrait = false;
       isMobilePortrait = false;
@@ -41,10 +41,10 @@ class SizeConfig {
   }
 
   static double height(double val) {
-    return (val / 917.6470759830676) * screenHeight;
+    return (val / 1013.3333333333334) * screenHeight;
   }
 
   static double width(double val) {
-    return (val / 423.5294196844927) * screenWidth;
+    return (val / 480.0) * screenWidth;
   }
 }
