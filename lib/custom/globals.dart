@@ -9,7 +9,7 @@ User mainUser = new User("", "", "", "", "", "", "");
 double width(double width) {}
 
 double height(double height) {}
-bool darkModeOn = true;
+bool darkModeOn = false;
 bool isPortrait;
 bool isPlaying = false;
 bool isOtpLogin = false;

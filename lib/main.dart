@@ -7,6 +7,7 @@ import 'package:cookit/util/responsiveui.dart';
 import 'package:cookit/util/size_config.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cookit/views/dashboard.dart';
+import 'package:cookit/views/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
                     globals.user.uid = user.uid;
                     globals.user.name = user.displayName;
                   }
-                  return SplashScreen();
+                  return UserProfile();
                 },
               ),
             );
@@ -84,7 +85,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     print(auth.currentUser().toString());
     getDarkMode();
-    getFirstRun();
     if(globals.darkModeOn){
       updateSplashDark();
       print("d");
@@ -100,15 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     globals.darkModeOn = sharedPreferences.getBool("darkMode");
     if (globals.darkModeOn == null) {
-      globals.darkModeOn = true;
-    }
-  }
-
-  getFirstRun() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    firstRun = sharedPreferences.getBool("firstRun");
-    if (firstRun == null) {
-      firstRun = true;
+      globals.darkModeOn = false;
     }
   }
 

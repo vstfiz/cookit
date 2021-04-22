@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookit/util/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cookit/custom/globals.dart' as globals;
+import 'package:cookit/views/user_profile.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -11,19 +14,29 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   String currDate = '';
-  var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+  var monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
   ];
 
   @override
   void initState() {
     var date = new DateTime.now();
     print(date.day);
-    print(monthNames[date.month-1]);
-    currDate = monthNames[date.month-1] + " " + date.day.toString();
+    print(monthNames[date.month - 1]);
+    currDate = monthNames[date.month - 1] + " " + date.day.toString();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +47,10 @@ class _DashboardState extends State<Dashboard> {
         left: true,
         child: WillPopScope(
           onWillPop: () {},
-          child:Scaffold(
+          child: Scaffold(
             backgroundColor: Color(0xFFFFF5EB),
-            body:SingleChildScrollView(
-              child:  Column(
+            body: SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
@@ -47,25 +60,78 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Column(
                         children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.fromLTRB(15.0, 35.0, 15.0, 10.0),
-                            child: FlatButton(
-                              child:  Material(
-                                elevation: 10.0,
-                                borderRadius: BorderRadius.circular(25.0),
-                                child: TextFormField(
-                                  enabled: false,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.search, color: Colors.black),
-                                      contentPadding:
-                                      EdgeInsets.only(left: 15.0, top: 15.0),
-                                      hintText: 'Search for recipes and channels',
-                                      hintStyle: TextStyle(color: Colors.grey)),
+                          Row(
+                            children: [
+                              Container(
+                                width: SizeConfig.width(400),
+                                margin: EdgeInsets.only(
+                                    left: 20, top: 35.0, bottom: 10.0),
+                                child: FlatButton(
+                                  child: Material(
+                                    elevation: 10.0,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          prefixIcon: Icon(Icons.search,
+                                              color: Colors.black),
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15.0, top: 15.0),
+                                          hintText:
+                                              'Search for recipes and channels',
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey)),
+                                    ),
+                                  ),
+                                  onPressed: () {},
                                 ),
                               ),
-                              onPressed: (){},
-                            ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                height: SizeConfig.height(40),
+                                width: SizeConfig.width(40),
+                                margin:
+                                    EdgeInsets.only(top: 35.0, bottom: 10.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                child: FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (context) {
+                                      return UserProfile();
+                                    }));
+                                  },
+                                  child: CachedNetworkImage(
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      height: SizeConfig.height(40),
+                                      width: SizeConfig.width(40),
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                          shape: BoxShape.circle),
+                                    ),
+                                    placeholder: (context, url) => Center(
+                                      child: Container(
+                                        height: SizeConfig.height(20),
+                                        width: SizeConfig.width(20),
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Icons.error,
+                                      size: 18,
+                                    ),
+                                    imageUrl: globals.mainUser.dp,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 40.0),
                           Padding(
@@ -81,7 +147,8 @@ class _DashboardState extends State<Dashboard> {
                               child: Row(
                                 children: <Widget>[
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text('POPULAR RECIPES',
                                           style: TextStyle(
@@ -103,7 +170,8 @@ class _DashboardState extends State<Dashboard> {
                             padding: EdgeInsets.only(bottom: 20.0),
                           ),
                           Container(
-                            padding: EdgeInsets.only(top: 15.0, left: 30.0),margin: EdgeInsets.only(top: 40),
+                            padding: EdgeInsets.only(top: 15.0, left: 30.0),
+                            margin: EdgeInsets.only(top: 40),
                             height: 180.0,
                             child: ListView(
                               shrinkWrap: true,
@@ -131,8 +199,7 @@ class _DashboardState extends State<Dashboard> {
                       style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Colors.grey,
-                          fontSize: 14.0
-                      ),
+                          fontSize: 14.0),
                     ),
                   ),
                   Container(
@@ -143,8 +210,7 @@ class _DashboardState extends State<Dashboard> {
                       style: TextStyle(
                           fontFamily: 'Timesroman',
                           fontWeight: FontWeight.bold,
-                          fontSize: 30.0
-                      ),
+                          fontSize: 30.0),
                     ),
                   ),
                   SizedBox(height: 40.0),
@@ -156,8 +222,9 @@ class _DashboardState extends State<Dashboard> {
                           height: 420.0,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
-                              image: DecorationImage(image: AssetImage('assets/breakfast.jpg'), fit: BoxFit.cover)
-                          ),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/breakfast.jpg'),
+                                  fit: BoxFit.cover)),
                           // child: BackdropFilter(
                           //   filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
                           //   child: Container(
@@ -170,21 +237,21 @@ class _DashboardState extends State<Dashboard> {
                           padding: EdgeInsets.only(top: 300.0, left: 60.0),
                           child: Column(
                             children: <Widget>[
-                              Text('BEST OF',
+                              Text(
+                                'BEST OF',
                                 style: TextStyle(
                                     fontFamily: 'Timesroman',
                                     fontSize: 25.0,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
-                              Text('THE DAY',
+                              Text(
+                                'THE DAY',
                                 style: TextStyle(
                                     fontFamily: 'Timesroman',
                                     fontSize: 25.0,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 10.0),
                               Container(
@@ -193,8 +260,7 @@ class _DashboardState extends State<Dashboard> {
                                 color: Colors.orange,
                               )
                             ],
-                          )
-                      )
+                          ))
                     ],
                   )
                 ],
@@ -209,7 +275,6 @@ class _DashboardState extends State<Dashboard> {
       height: 180.0,
       width: 350.0,
       decoration: BoxDecoration(
-
         borderRadius: BorderRadius.circular(12.0),
         color: Colors.white,
       ),
@@ -219,7 +284,7 @@ class _DashboardState extends State<Dashboard> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image:
-                DecorationImage(image: AssetImage('assets/balanced.jpg'))),
+                    DecorationImage(image: AssetImage('assets/balanced.jpg'))),
             height: 180.0,
             width: 160.0,
           ),
@@ -229,7 +294,7 @@ class _DashboardState extends State<Dashboard> {
             children: <Widget>[
               Text(
                 'Grilled Chicken\nwith Fruit Salad',
-                style: TextStyle(fontFamily: 'Quicksand',fontSize: 15),
+                style: TextStyle(fontFamily: 'Quicksand', fontSize: 15),
               ),
               SizedBox(height: 10.0),
               Container(
