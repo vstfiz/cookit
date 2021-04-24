@@ -14,6 +14,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   int count = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,48 +29,53 @@ class _UserProfileState extends State<UserProfile> {
             body: Stack(
               children: [
                 Container(
-                    width: SizeConfig.width(480),
-                    height: SizeConfig.height(1013.3333333333334) / 4.7,
-                    decoration: BoxDecoration(
+                  width: SizeConfig.width(480),
+                  height: SizeConfig.height(1013.3333333333334) / 4.7,
+                  decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/cover.jpg',),fit: BoxFit.cover
-                      )
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: SizeConfig.width(10),
-                              bottom: SizeConfig.height(960)),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_back,
-                              size: 40,
-                            ),
+                          image: AssetImage(
+                            'assets/cover.jpg',
+                          ),
+                          fit: BoxFit.cover)),
+                ),
+                Positioned(
+                  child: Row(
+                    children: [
+                      Container(
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_back,
+                            size: 40,
+                            color: Colors.black,
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: SizeConfig.width(360),
-                              bottom: SizeConfig.height(960)),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                  new MaterialPageRoute(builder: (context) {
-                                return EditProfile();
-                              }));
-                            },
-                            icon: Icon(
-                              Icons.edit,
-                              size: 40,
-                            ),
+                      ),
+                      SizedBox(
+                        width: SizeConfig.width(370),
+                      ),
+                      Container(
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push(new MaterialPageRoute(builder: (context) {
+                              return EditProfile();
+                            }));
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                            size: 40,
+                            color: Colors.black ,
                           ),
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                  top: 0,
+                  left: 0,
+                ),
                 CachedNetworkImage(
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.only(
@@ -105,8 +111,7 @@ class _UserProfileState extends State<UserProfile> {
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(
-                            top: 10, bottom: 10),
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: Text(
                           globals.user.name,
                           overflow: TextOverflow.ellipsis,
@@ -119,8 +124,7 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 10, bottom: 10),
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: Text(
                           globals.user.email,
                           overflow: TextOverflow.ellipsis,
@@ -142,51 +146,60 @@ class _UserProfileState extends State<UserProfile> {
                           width: MediaQuery.of(context).size.width -
                               SizeConfig.width(40),
                           height: SizeConfig.height(100),
-                          padding: EdgeInsets.symmetric(vertical: SizeConfig.height(25)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.height(25)),
                           child: Text(
-                            '${count} Recipes',style: TextStyle(
-                            color: Colors.grey,
-                            fontFamily: 'Livvic',fontSize: 30
-                          ),softWrap: true,textAlign: TextAlign.center,
+                            '${count} Recipes',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: 'Livvic',
+                                fontSize: 30),
+                            softWrap: true,
+                            textAlign: TextAlign.center,
                           ),
                           decoration: BoxDecoration(
-                              color: globals.darkModeOn?Colors.black:Colors.white,
+                              color: globals.darkModeOn
+                                  ? Colors.black
+                                  : Colors.white,
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                       SizedBox(
                         height: SizeConfig.height(80),
                       ),
-                      TextButton(onPressed: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (context){
-                          return MyRecipes();
-                        }));
-                      }, child: Container(
-                        width: SizeConfig.width(220),
-                        height: SizeConfig.height(60),
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(40)),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: SizeConfig.width(35),
-                              right: SizeConfig.width(35)),
-                          width: SizeConfig.width(100),
-                          height: SizeConfig.height(60),
-                          decoration: BoxDecoration(
-                              color: Colors.pink,
-                              borderRadius: BorderRadius.circular(40)),
-                          child: Center(
-                            child: Text(
-                              'My Recipes',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontFamily: 'Livvic'),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .push(new MaterialPageRoute(builder: (context) {
+                              return MyRecipes();
+                            }));
+                          },
+                          child: Container(
+                            width: SizeConfig.width(220),
+                            height: SizeConfig.height(60),
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(40)),
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: SizeConfig.width(35),
+                                  right: SizeConfig.width(35)),
+                              width: SizeConfig.width(100),
+                              height: SizeConfig.height(60),
+                              decoration: BoxDecoration(
+                                  color: Colors.pink,
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: Center(
+                                child: Text(
+                                  'My Recipes',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontFamily: 'Livvic'),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ))
+                          ))
                     ],
                   ),
                 ),

@@ -39,21 +39,7 @@ class _EditProfileState extends State<EditProfile> {
     _phoneController.text = globals.mainUser.mobile;
     _genderController.text = globals.mainUser.gender;
     _occupationController.text = globals.mainUser.age;
-
-    // wait();
   }
-
-  // wait() async {
-  //   if (globals.myAlgoList.length != 0) {
-  //     globals.myAlgoList.removeRange(0, globals.myAlgoList.length - 1);
-  //   }
-  //   await fdb.FirebaseDB.getMyAlgos();
-  //   return Timer(Duration(milliseconds: 1000), () {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,18 +55,8 @@ class _EditProfileState extends State<EditProfile> {
         },
         child: Scaffold(
           backgroundColor: globals.darkModeOn ? Colors.grey[800] : Colors.white,
-          body: isLoading
-              ? SingleChildScrollView(
-            child: ResponsiveWidget(
-              portraitLayout: _loadingPortraitStack(context),
-              landscapeLayout: _loadingLandscapeStack(context),
-            ),
-          )
-              : SingleChildScrollView(
-            child: ResponsiveWidget(
-              portraitLayout: _portraitStack(context),
-              landscapeLayout: _landscapeStack(context),
-            ),
+          body: SingleChildScrollView(
+            child: _portraitStack(context),
           ),
         ),
       ),
@@ -94,10 +70,7 @@ class _EditProfileState extends State<EditProfile> {
           clipper: OvalBottomBorderClipper(),
           child: Container(
             height: SizeConfig.height(360),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: globals.darkModeOn ? Colors.pink : Colors.grey,
             ),
@@ -107,25 +80,20 @@ class _EditProfileState extends State<EditProfile> {
           clipper: OvalBottomBorderClipper(),
           child: Container(
             height: SizeConfig.height(350),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: globals.darkModeOn ? Colors.black : Color(0xFF2D3E50),
+              image: DecorationImage(
+                  image: AssetImage('assets/cover.jpg'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.grey.withOpacity(0.6), BlendMode.srcOver)),
             ),
           ),
         ),
         Positioned(
           top: SizeConfig.height(25),
-          left: (MediaQuery
-              .of(context)
-              .size
-              .width / 2) - SizeConfig.width(70),
-          right: (MediaQuery
-              .of(context)
-              .size
-              .width / 2) - SizeConfig.width(70),
+          left: (MediaQuery.of(context).size.width / 2) - SizeConfig.width(70),
+          right: (MediaQuery.of(context).size.width / 2) - SizeConfig.width(70),
           child: CircleAvatar(
             radius: 70,
             backgroundColor: globals.darkModeOn ? Colors.white : Colors.grey,
@@ -133,51 +101,36 @@ class _EditProfileState extends State<EditProfile> {
         ),
         Positioned(
           top: SizeConfig.height(30),
-          left: (MediaQuery
-              .of(context)
-              .size
-              .width / 2) - SizeConfig.width(65),
-          right: (MediaQuery
-              .of(context)
-              .size
-              .width / 2) - SizeConfig.width(65),
+          left: (MediaQuery.of(context).size.width / 2) - SizeConfig.width(65),
+          right: (MediaQuery.of(context).size.width / 2) - SizeConfig.width(65),
           child: CachedNetworkImage(
-            imageBuilder: (context, imageProvider) =>
-                Container(
-                  height: SizeConfig.height(130),
-                  width: SizeConfig.width(130),
-                  decoration: BoxDecoration(
-                      image:
+            imageBuilder: (context, imageProvider) => Container(
+              height: SizeConfig.height(130),
+              width: SizeConfig.width(130),
+              decoration: BoxDecoration(
+                  image:
                       DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                      shape: BoxShape.circle),
-                ),
-            placeholder: (context, url) =>
-                Center(
-                  child: Container(
-                    height: SizeConfig.height(25),
-                    width: SizeConfig.width(25),
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
+                  shape: BoxShape.circle),
+            ),
+            placeholder: (context, url) => Center(
+              child: Container(
+                height: SizeConfig.height(25),
+                width: SizeConfig.width(25),
+                child: CircularProgressIndicator(),
+              ),
+            ),
             errorWidget: (context, url, error) => Icon(Icons.error),
-            imageUrl:
-            globals.mainUser.dp,
-            // width: 10 * SizeConfig.imageSizeMultiplier,
-            // height: 10 * SizeConfig.imageSizeMultiplier,
+            imageUrl: globals.mainUser.dp,
           ),
         ),
         Positioned(
           top: SizeConfig.height(130),
-          left: (MediaQuery
-              .of(context)
-              .size
-              .width / 2) + SizeConfig.width(30),
-//          right: (MediaQuery.of(context).size.width / 2 ) -70,
+          left: (MediaQuery.of(context).size.width / 2) + SizeConfig.width(30),
           child: Container(
               height: SizeConfig.height(30),
               width: SizeConfig.width(30),
               decoration:
-              BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
+                  BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
               child: IconButton(
                 icon: Icon(
                   Icons.edit,
@@ -191,10 +144,7 @@ class _EditProfileState extends State<EditProfile> {
 //          right: 20,
           left: SizeConfig.width(20),
           child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width - SizeConfig.width(40),
+            width: MediaQuery.of(context).size.width - SizeConfig.width(40),
             child: Text(
               globals.mainUser.name,
               style: TextStyle(
@@ -209,10 +159,7 @@ class _EditProfileState extends State<EditProfile> {
 //          right: 20,
           left: SizeConfig.width(20),
           child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width - SizeConfig.width(40),
+            width: MediaQuery.of(context).size.width - SizeConfig.width(40),
             child: Text(
               globals.mainUser.email,
               style: TextStyle(
@@ -222,28 +169,8 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
         ),
-        Positioned(
-          top: SizeConfig.height(280),
-//          right: 20,
-          left: SizeConfig.width(20),
-          child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width - SizeConfig.width(40),
-            child: Text(
-              " Algorithms",
-              style: TextStyle(
-                  fontFamily: "Livvic", fontSize: 28, color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
         Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: SizeConfig.height(425)),
             child: Stack(
               children: <Widget>[
@@ -251,10 +178,11 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(left: SizeConfig.width(15)),
                   child: Text("Name",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25,
+                      style: TextStyle(
+                          fontSize: 25,
                           fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
+                          color:
+                              globals.darkModeOn ? Colors.white : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ),
@@ -262,8 +190,7 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(20)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
                 Container(
                   height: SizeConfig.height(60),
@@ -273,21 +200,19 @@ class _EditProfileState extends State<EditProfile> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: SizeConfig.width(15)),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - SizeConfig.width(80),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(80),
                         child: TextField(
                           controller: _nameController,
                           enabled: field1,
-                          style: TextStyle(fontFamily: "Livvic",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
                               fontSize: 25,
                               color: Colors.grey),
-
                           decoration: InputDecoration(
                               hintText: globals.mainUser.name,
-                              contentPadding: EdgeInsets.only(
-                                  right: 5.0, bottom: 8.0),
+                              contentPadding:
+                                  EdgeInsets.only(right: 5.0, bottom: 8.0),
                               border: InputBorder.none),
                         ),
                       ),
@@ -310,27 +235,24 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(60)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
               ],
             )),
         Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            margin: EdgeInsets.only(top: SizeConfig.height(5000)),
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: SizeConfig.height(500)),
             child: Stack(
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(left: SizeConfig.height(15)),
                   child: Text("E-mail",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25,
+                      style: TextStyle(
+                          fontSize: 25,
                           fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
+                          color:
+                              globals.darkModeOn ? Colors.white : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ),
@@ -338,8 +260,7 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(20)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
                 Container(
                   height: SizeConfig.height(60),
@@ -349,20 +270,19 @@ class _EditProfileState extends State<EditProfile> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: SizeConfig.width(15)),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - SizeConfig.width(80),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(80),
                         child: TextField(
                           enabled: field2,
-                          style: TextStyle(fontFamily: "Livvic",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
                               fontSize: 25,
                               color: Colors.grey),
-
                           decoration: InputDecoration(
                               hintText: globals.mainUser.email,
                               contentPadding: EdgeInsets.only(
-                                  right: SizeConfig.width(5), bottom: SizeConfig.height(8)),
+                                  right: SizeConfig.width(5),
+                                  bottom: SizeConfig.height(8)),
                               border: InputBorder.none),
                         ),
                       ),
@@ -384,16 +304,12 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(60)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
               ],
             )),
         Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: SizeConfig.height(575)),
             child: Stack(
               children: <Widget>[
@@ -401,10 +317,11 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(left: SizeConfig.height(15)),
                   child: Text("Phone",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25,
+                      style: TextStyle(
+                          fontSize: 25,
                           fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
+                          color:
+                              globals.darkModeOn ? Colors.white : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ),
@@ -412,8 +329,7 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(20)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
                 Container(
                   height: SizeConfig.height(60),
@@ -423,20 +339,19 @@ class _EditProfileState extends State<EditProfile> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: SizeConfig.height(15)),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - SizeConfig.width(80),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(80),
                         child: TextField(
                           enabled: field3,
-                          style: TextStyle(fontFamily: "Livvic",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
                               fontSize: 25,
                               color: Colors.grey),
-
                           decoration: InputDecoration(
                               hintText: globals.mainUser.mobile,
                               contentPadding: EdgeInsets.only(
-                                  right: SizeConfig.width(5), bottom: SizeConfig.height(8)),
+                                  right: SizeConfig.width(5),
+                                  bottom: SizeConfig.height(8)),
                               border: InputBorder.none),
                         ),
                       ),
@@ -458,16 +373,12 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(60)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
               ],
             )),
         Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: SizeConfig.height(650)),
             child: Stack(
               children: <Widget>[
@@ -475,10 +386,11 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(left: SizeConfig.width(15)),
                   child: Text("Gender",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25,
+                      style: TextStyle(
+                          fontSize: 25,
                           fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
+                          color:
+                              globals.darkModeOn ? Colors.white : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ),
@@ -486,8 +398,7 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(20)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
                 Container(
                   height: SizeConfig.height(60),
@@ -497,20 +408,19 @@ class _EditProfileState extends State<EditProfile> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: SizeConfig.height(15)),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - SizeConfig.width(80),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(80),
                         child: TextField(
                           enabled: field4,
-                          style: TextStyle(fontFamily: "Livvic",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
                               fontSize: 25,
                               color: Colors.grey),
-
                           decoration: InputDecoration(
                               hintText: globals.mainUser.gender,
                               contentPadding: EdgeInsets.only(
-                                  right: SizeConfig.width(5), bottom: SizeConfig.height(8)),
+                                  right: SizeConfig.width(5),
+                                  bottom: SizeConfig.height(8)),
                               border: InputBorder.none),
                         ),
                       ),
@@ -532,27 +442,24 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(60)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
               ],
             )),
         Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(top: SizeConfig.height(725)),
             child: Stack(
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(left: SizeConfig.height(15)),
-                  child: Text("Occupation",
+                  child: Text("Age",
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25,
+                      style: TextStyle(
+                          fontSize: 25,
                           fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
+                          color:
+                              globals.darkModeOn ? Colors.white : Colors.black),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ),
@@ -560,8 +467,7 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(20)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
                 Container(
                   height: SizeConfig.height(60),
@@ -571,20 +477,19 @@ class _EditProfileState extends State<EditProfile> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(left: SizeConfig.width(15)),
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width - SizeConfig.width(80),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(80),
                         child: TextField(
                           enabled: field5,
-                          style: TextStyle(fontFamily: "Livvic",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
                               fontSize: 25,
                               color: Colors.grey),
-
                           decoration: InputDecoration(
                               hintText: globals.mainUser.age,
                               contentPadding: EdgeInsets.only(
-                                  right: SizeConfig.width(5), bottom: SizeConfig.height(8)),
+                                  right: SizeConfig.width(5),
+                                  bottom: SizeConfig.height(8)),
                               border: InputBorder.none),
                         ),
                       ),
@@ -606,51 +511,51 @@ class _EditProfileState extends State<EditProfile> {
                   margin: EdgeInsets.only(top: SizeConfig.height(60)),
                   child: Divider(
                       thickness: 1,
-                      color: globals.darkModeOn ? Colors.white : Colors.black
-                  ),
+                      color: globals.darkModeOn ? Colors.white : Colors.black),
                 ),
               ],
             )),
         Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width - SizeConfig.width(40),
-          margin: EdgeInsets.only(left: SizeConfig.width(20), right: SizeConfig.width(20), top: SizeConfig.height(820)),
+          width: MediaQuery.of(context).size.width - SizeConfig.width(40),
+          margin: EdgeInsets.only(
+              left: SizeConfig.width(20),
+              right: SizeConfig.width(20),
+              top: SizeConfig.height(820)),
           decoration: BoxDecoration(
               color: globals.darkModeOn ? Colors.pink : Colors.blue,
               borderRadius: BorderRadius.circular(15)),
           child: FlatButton(
             onPressed: () {
-              if (_nameController.text != "" &&
-                  _nameController.text != null) {
+              if (_nameController.text != "" && _nameController.text != null) {
                 if (EmailValidator.validate(_emailController.text)) {
                   if (_genderController.text != "" &&
                       _genderController.text != null) {
                     if (validatePhone(_phoneController.text)) {
-                      if (_occupationController.text != "" &&
-                          _occupationController.text != null) {
+                      if (validateAge(_occupationController.text)) {
                         print("reached");
-                        showDialog(context: context,
+                        showDialog(
+                            context: context,
                             builder: (context) => _loadingDialog());
                         fdb.FirebaseDB.updateDetails(
-                            _nameController.text,
-                            _emailController.text,
-                            _phoneController.text,
-                            _phoneController.text,
-                            _occupationController.text)
+                                _nameController.text,
+                                _emailController.text,
+                                _phoneController.text,
+                                _phoneController.text,
+                                _occupationController.text)
                             .whenComplete(() {
                           Navigator.pop(context);
                           SystemNavigator.pop();
                         });
                       } else {
                         Fluttertoast.showToast(
-                            msg: "No Occupation entered. Please enter your Occupation",
+                            msg:
+                                "No Occupation entered. Please enter your Occupation",
                             toastLength: Toast.LENGTH_LONG);
                       }
                     } else {
                       Fluttertoast.showToast(
-                          msg: "Invalid Mobile. Please enter valid Mobile Number",
+                          msg:
+                              "Invalid Mobile. Please enter valid Mobile Number",
                           toastLength: Toast.LENGTH_LONG);
                     }
                   } else {
@@ -687,8 +592,8 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _loadingDialog() {
     return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         backgroundColor: Colors.white,
         content: Container(
             height: SizeConfig.height(60),
@@ -701,21 +606,19 @@ class _EditProfileState extends State<EditProfile> {
                   SizedBox(
                     width: SizeConfig.width(20),
                   ),
-                  Text("Uploading Data...", style: TextStyle(
-                      fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),)
+                  Text(
+                    "Uploading Data...",
+                    style: TextStyle(
+                        fontFamily: "Livvic", fontSize: 23, letterSpacing: 1),
+                  )
                 ],
               ),
-            )
-        )
-    );
+            )));
   }
 
   Widget _userDetailFields(double top, String title, String value, bool field) {
     return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: top),
         child: Stack(
           children: <Widget>[
@@ -741,19 +644,19 @@ class _EditProfileState extends State<EditProfile> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(left: SizeConfig.width(15)),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width - SizeConfig.width(80),
+                    width: MediaQuery.of(context).size.width -
+                        SizeConfig.width(80),
                     child: TextField(
                       enabled: true,
-                      style: TextStyle(fontFamily: "Livvic",
+                      style: TextStyle(
+                          fontFamily: "Livvic",
                           fontSize: 25,
                           color: Colors.grey),
-
                       decoration: InputDecoration(
                           hintText: value,
-                          contentPadding: EdgeInsets.only(right: SizeConfig.width(5), top: SizeConfig.height(8)),
+                          contentPadding: EdgeInsets.only(
+                              right: SizeConfig.width(5),
+                              top: SizeConfig.height(8)),
                           border: InputBorder.none),
                     ),
                   ),
@@ -788,10 +691,7 @@ class _EditProfileState extends State<EditProfile> {
           clipper: OvalBottomBorderClipper(),
           child: Container(
             height: SizeConfig.height(360),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Colors.grey,
             ),
@@ -801,20 +701,14 @@ class _EditProfileState extends State<EditProfile> {
           clipper: OvalBottomBorderClipper(),
           child: Container(
             height: SizeConfig.height(350),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Color(0xFF2D3E50),
             ),
           ),
         ),
         Positioned(
-          top: (MediaQuery
-              .of(context)
-              .size
-              .height - 60) / 2,
+          top: (MediaQuery.of(context).size.height - 60) / 2,
           child: AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
@@ -826,7 +720,7 @@ class _EditProfileState extends State<EditProfile> {
                       children: <Widget>[
                         CircularProgressIndicator(
                           valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.blue),
+                              AlwaysStoppedAnimation<Color>(Colors.blue),
                         ),
                         SizedBox(
                           width: SizeConfig.width(20),
@@ -846,18 +740,8 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _landscapeStack(BuildContext context) {
-    return Container(
-      height: 917.6470759830676,
-      width: 423.5294196844927,
-      child: _portraitStack(context),
-      margin: EdgeInsets.only(
-          left: (MediaQuery.of(context).size.width - 423.5294196844927) / 2,
-          top: (MediaQuery.of(context).size.width - 917.6470759830676) / 2),
-    );
-  }
-
-  Widget _loadingLandscapeStack(BuildContext context) {
-    return SizedBox();
+  bool validateAge(String age) {
+    RegExp regExp = new RegExp(r'(^[1-9]{1,3}$)');
+    return regExp.hasMatch(age);
   }
 }

@@ -9,6 +9,7 @@ import 'package:cookit/util/size_config1.dart' as s1;
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cookit/views/content.dart';
 import 'package:cookit/views/dashboard.dart';
+import 'package:cookit/views/edit_profile.dart';
 import 'package:cookit/views/my_recipes.dart';
 import 'package:cookit/views/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,11 +45,13 @@ class MyApp extends StatelessWidget {
             s1.SizeConfig().init(constraints, orientation);
             return MaterialApp(
               title: 'Varithms',
-              theme: globals.darkModeOn ? ThemeData(
-                primarySwatch: Colors.orange,
-              ) : ThemeData(
-                primarySwatch: Colors.blue,
-              ),
+              theme: globals.darkModeOn
+                  ? ThemeData(
+                      primarySwatch: Colors.orange,
+                    )
+                  : ThemeData(
+                      primarySwatch: Colors.blue,
+                    ),
               home: StreamBuilder(
                 stream: auth.onAuthStateChanged,
                 builder: (context, snapshot) {
@@ -84,16 +87,16 @@ class _SplashScreenState extends State<SplashScreen> {
   int countSplash = 1;
   String splash = 'assets/splash/1.jpg';
   String splashDark = 'assets/splash/1dark.jpg';
+
   @override
   void initState() {
     super.initState();
     print(auth.currentUser().toString());
     getDarkMode();
-    if(globals.darkModeOn){
+    if (globals.darkModeOn) {
       updateSplashDark();
       print("d");
-    }
-    else{
+    } else {
       updateSplash();
       print("l");
     }
@@ -108,23 +111,27 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  updateSplash(){
-    return new Timer(new Duration(milliseconds: 800), (){
+  updateSplash() {
+    return new Timer(new Duration(milliseconds: 800), () {
       setState(() {
         countSplash += 1;
-        splash =  'assets/splash/' + countSplash.toString() + '.jpg';
+        splash = 'assets/splash/' + countSplash.toString() + '.jpg';
       });
-      if(countSplash<5){updateSplash();}
+      if (countSplash < 5) {
+        updateSplash();
+      }
     });
   }
 
-  updateSplashDark(){
-    return new Timer(new Duration(milliseconds: 800), (){
+  updateSplashDark() {
+    return new Timer(new Duration(milliseconds: 800), () {
       setState(() {
         countSplash += 1;
-        splashDark =  'assets/splash/' + countSplash.toString() + 'dark.jpg';
+        splashDark = 'assets/splash/' + countSplash.toString() + 'dark.jpg';
       });
-      if(countSplash<5){updateSplashDark();}
+      if (countSplash < 5) {
+        updateSplashDark();
+      }
     });
   }
 
@@ -133,24 +140,23 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   navigator() {
-      if (globals.user.email != null && globals.user.email != "") {
-        fdb.FirebaseDB.getUserDetails(globals.user.uid, context);
-        print(globals.user.email);
-      }
-      else {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return Login();
-        }));
-      }
+    if (globals.user.email != null && globals.user.email != "") {
+      fdb.FirebaseDB.getUserDetails(globals.user.uid, context);
+      print(globaleds.user.email);
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return Login();
+      }));
     }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: globals.darkModeOn ? Colors.black : Colors.white,
       body: globals.darkModeOn
-            ? portraitStackDark(context)
-            : portraitStackLight(context),
+          ? portraitStackDark(context)
+          : portraitStackLight(context),
     );
   }
 
@@ -169,14 +175,14 @@ class _SplashScreenState extends State<SplashScreen> {
           left: SizeConfig.width(100),
           child: SizedBox(
             width: SizeConfig.width(340),
-            child: Text("CookiT",
-                style: TextStyle(
-                    fontSize: 60.0,
-                    fontFamily: "Aquire",
-                    color: Colors.black,
-                    letterSpacing: 10
-                ),
-                textAlign: TextAlign.start,
+            child: Text(
+              "CookiT",
+              style: TextStyle(
+                  fontSize: 60.0,
+                  fontFamily: "Aquire",
+                  color: Colors.black,
+                  letterSpacing: 10),
+              textAlign: TextAlign.start,
             ),
           ),
         ),
@@ -200,14 +206,14 @@ class _SplashScreenState extends State<SplashScreen> {
           child: SizedBox(
             width: SizeConfig.width(340),
             child: Text(
-                  "CookiT",
-                style: TextStyle(
-                    fontSize: 60.0,
-                    fontFamily: "Aquire",
-                    color: Colors.white,
-                    letterSpacing: 10
-                ),
-                textAlign: TextAlign.start,),
+              "CookiT",
+              style: TextStyle(
+                  fontSize: 60.0,
+                  fontFamily: "Aquire",
+                  color: Colors.white,
+                  letterSpacing: 10),
+              textAlign: TextAlign.start,
+            ),
           ),
         ),
       ],
