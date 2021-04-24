@@ -60,7 +60,16 @@ class FirebaseDB {
   }
 
   static Future<void> getBestOfTheDay() async{
-
+    Firestore firestore = Firestore.instance;
+    var ref = firestore.collection('recipes');
+    QuerySnapshot querySnapshot = await ref.getDocuments();
+    int limit = querySnapshot.documents.length;
+    print('limit is'+limit.toString());
+    Random r = new Random();
+    List<DocumentSnapshot> ds = querySnapshot.documents;
+    List<Recipe> recipes = [];
+    int index = r.nextInt(limit);
+    globals.bestOfTheDay = new Recipe(ds[index]['name'], ds[index]['chef_name'], ds[index]['reference'], ds[index]['imageUrl'], ds[index]['ingredients'], ds[index]['chef_dp'], ds[index]['recipe']);
   }
 
   // static Future<List<Algorithms>> getAlgos(String categoryName) async {

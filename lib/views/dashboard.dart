@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookit/util/size_config1.dart';
+import 'package:cookit/views/searching.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
@@ -9,6 +10,8 @@ import 'package:cookit/views/user_profile.dart';
 import 'package:cookit/views/settings.dart';
 import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:flutter/services.dart';
+
+import 'content.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -45,6 +48,7 @@ class _DashboardState extends State<Dashboard> {
 
   getRec() async{
     await fdb.FirebaseDB.getRecipeDashBoard();
+    await fdb.FirebaseDB.getBestOfTheDay();
     setState(() {
       isLoading = false;
     });
@@ -105,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
             exitDialog();
           },
           child: Scaffold(
-            backgroundColor: Color(0xFFFFF5EB),
+            backgroundColor: isLoading?Color(0xFFFFF5EB).withOpacity(0.5):Color(0xFFFFF5EB),
             body: isLoading
                 ? _loadingDialog()
                 : SingleChildScrollView(
@@ -125,12 +129,20 @@ class _DashboardState extends State<Dashboard> {
                                       width: SizeConfig.width(400),
                                       margin: EdgeInsets.only(
                                           left: 20, top: 35.0, bottom: 10.0),
-                                      child: FlatButton(
                                         child: Material(
                                           elevation: 10.0,
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                           child: TextFormField(
+                                            onChanged: (searchValue){
+                                              print(searchValue);
+                                            },
+                                            onTap: (){
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context) {
+                                                    return Searching();
+                                                  }));
+                                            },
                                             enabled: false,
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
@@ -144,8 +156,6 @@ class _DashboardState extends State<Dashboard> {
                                                     color: Colors.grey)),
                                           ),
                                         ),
-                                        onPressed: () {},
-                                      ),
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -256,7 +266,7 @@ class _DashboardState extends State<Dashboard> {
                                               Navigator.of(context).push(
                                                   new MaterialPageRoute(
                                                       builder: (context) {
-                                                return Settings();
+                                                return Content();
                                               }));
                                             },
                                           ),
@@ -348,24 +358,40 @@ class _DashboardState extends State<Dashboard> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                              child: Container(
-                                height: 420.0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    image: DecorationImage(
-                                        image:
-                                            AssetImage('assets/breakfast.jpg'),
-                                        fit: BoxFit.cover)),
-                                // child: BackdropFilter(
-                                //   filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
-                                //   child: Container(
-                                //     decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                                //   ),
-                                // ),
+                              child: CachedNetworkImage(
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                      height: SizeConfig.height(420),
+                                      width: MediaQuery.of(context).size.width - SizeConfig.width(20),
+                                      margin: EdgeInsets.only(left: SizeConfig.width(10)),
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                          shape: BoxShape.circle),
+                                    ),
+                                placeholder: (context, url) => Center(
+                                  child: Container(
+                                    height: SizeConfig.height(25),
+                                    width: SizeConfig.width(25),
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Icon(
+                                      Icons.error,
+                                      size: 18,
+                                    ),
+                                imageUrl: globals.bestOfTheDay.imageUrl,
                               ),
                             ),
                             Container(
-                                padding:
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(128, 128, 128, 0.6),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+
+                                margin:
                                     EdgeInsets.only(top: 300.0, left: 60.0),
                                 child: Column(
                                   children: <Widget>[
@@ -412,42 +438,80 @@ class _DashboardState extends State<Dashboard> {
       ),
       child: Row(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                image:
-                    DecorationImage(image: AssetImage('assets/balanced.jpg'))),
-            height: 180.0,
-            width: 160.0,
+          CachedNetworkImage(
+            imageBuilder: (context, imageProvider) =>
+                Container(
+                  margin: EdgeInsets.only(left: 10,top: 10,bottom: 10),
+                  height: SizeConfig.height(130),
+                  width: SizeConfig.width(130),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover),
+                      shape: BoxShape.circle),
+                ),
+            placeholder: (context, url) => Center(
+              child: Container(
+                height: SizeConfig.height(40),
+                width: SizeConfig.width(40),
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            errorWidget: (context, url, error) =>
+                Icon(
+                  Icons.error,
+                  size: 18,
+                ),
+            imageUrl: url,
           ),
           SizedBox(width: 40.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Grilled Chicken\nwith Fruit Salad',
-                style: TextStyle(fontFamily: 'Quicksand', fontSize: 15),
+              Container(
+                width: SizeConfig.width(160),
+                child: Text(
+                  name,
+                  style: TextStyle(fontFamily: 'Quicksand', fontSize: 18,),softWrap: true,
+                ),
               ),
               SizedBox(height: 10.0),
               Container(
                 height: 2.0,
-                width: 75.0,
+                width: 160.0,
                 color: Colors.orange,
               ),
               SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    height: 25.0,
-                    width: 25.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.5),
-                        image: DecorationImage(
-                            image: AssetImage('assets/chris.jpg'))),
+                  CachedNetworkImage(
+                    imageBuilder: (context, imageProvider) =>
+                        Container(
+                          height: SizeConfig.height(25),
+                          width: SizeConfig.width(25),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover),
+                              shape: BoxShape.circle),
+                        ),
+                    placeholder: (context, url) => Center(
+                      child: Container(
+                        height: SizeConfig.height(25),
+                        width: SizeConfig.width(25),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Icon(
+                          Icons.error,
+                          size: 18,
+                        ),
+                    imageUrl: chef_url,
                   ),
-                  SizedBox(width: 10.0),
-                  Text('James Oliver',
+                  SizedBox(width: 20.0),
+                  Text(chef,
                       style: TextStyle(fontFamily: 'Quicksand'))
                 ],
               )
@@ -462,7 +526,7 @@ class _DashboardState extends State<Dashboard> {
     return AlertDialog(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white.withOpacity(0.5),
         content: Container(
             height: SizeConfig.height(60),
             child: Center(
