@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookit/util/size_config1.dart';
 import 'package:cookit/views/my_recipes.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,13 +24,17 @@ class _UserProfileState extends State<UserProfile> {
           },
           child: Scaffold(
             backgroundColor:
-                globals.darkModeOn ? Colors.grey[850] : Colors.white,
+                globals.darkModeOn ? Colors.grey[850] : Color(0xFFFFF5EB),
             body: Stack(
               children: [
                 Container(
                     width: SizeConfig.width(480),
                     height: SizeConfig.height(1013.3333333333334) / 4.7,
-                    color: Colors.red,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/cover.jpg',),fit: BoxFit.cover
+                      )
+                    ),
                     child: Row(
                       children: [
                         Container(
@@ -64,15 +70,31 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ],
                     )),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: SizeConfig.width(360) / 2,
-                      top: (SizeConfig.height(1013.3333333333334) / 4.7) -
-                          SizeConfig.width(80)),
-                  width: SizeConfig.width(160),
-                  height: SizeConfig.width(160),
-                  decoration: BoxDecoration(
-                      color: Colors.green, shape: BoxShape.circle),
+                CachedNetworkImage(
+                  imageBuilder: (context, imageProvider) => Container(
+                    margin: EdgeInsets.only(
+                        left: SizeConfig.width(360) / 2,
+                        top: (SizeConfig.height(1013.3333333333334) / 4.7) -
+                            SizeConfig.width(80)),
+                    width: SizeConfig.width(160),
+                    height: SizeConfig.width(160),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover),
+                        shape: BoxShape.circle),
+                  ),
+                  placeholder: (context, url) => Center(
+                    child: Container(
+                      height: SizeConfig.height(25),
+                      width: SizeConfig.width(25),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.error,
+                    size: 18,
+                  ),
+                  imageUrl: globals.user.dp,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -82,11 +104,11 @@ class _UserProfileState extends State<UserProfile> {
                           20),
                   child: Column(
                     children: [
-                      Padding(
+                      Container(
                         padding: EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 10),
+                            top: 10, bottom: 10),
                         child: Text(
-                          "frvgfvsdfsefsfcsfewafc",
+                          globals.user.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 28,
@@ -98,9 +120,9 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 10),
+                            top: 10, bottom: 10),
                         child: Text(
-                          "frvgfvsdfsefsfcsfewafc",
+                          globals.user.email,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 25,
@@ -114,13 +136,21 @@ class _UserProfileState extends State<UserProfile> {
                         height: 40,
                       ),
                       Material(
+                        color: Colors.transparent,
                         elevation: 8,
                         child: Container(
                           width: MediaQuery.of(context).size.width -
-                              SizeConfig.width(30),
-                          height: SizeConfig.height(160),
+                              SizeConfig.width(40),
+                          height: SizeConfig.height(100),
+                          padding: EdgeInsets.symmetric(vertical: SizeConfig.height(25)),
+                          child: Text(
+                            '${count} Recipes',style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Livvic',fontSize: 30
+                          ),softWrap: true,textAlign: TextAlign.center,
+                          ),
                           decoration: BoxDecoration(
-                              color: Colors.amber,
+                              color: globals.darkModeOn?Colors.black:Colors.white,
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
@@ -165,7 +195,7 @@ class _UserProfileState extends State<UserProfile> {
                     width: MediaQuery.of(context).size.width - 20,
                     height: SizeConfig.height(80),
                     decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(15)),
                     child: Center(
                       child: Text(

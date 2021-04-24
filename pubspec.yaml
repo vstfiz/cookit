@@ -95,6 +95,7 @@ flutter:
     - assets/images/whatsapp.png
     - assets/images/night.jpg
     - assets/images/github-logo.png
+    - assets/cover.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

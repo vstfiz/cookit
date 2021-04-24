@@ -38,7 +38,7 @@ class _EditProfileState extends State<EditProfile> {
     _emailController.text = globals.mainUser.email;
     _phoneController.text = globals.mainUser.mobile;
     _genderController.text = globals.mainUser.gender;
-    _occupationController.text = globals.mainUser.occupation;
+    _occupationController.text = globals.mainUser.age;
 
     // wait();
   }
@@ -582,7 +582,7 @@ class _EditProfileState extends State<EditProfile> {
                               color: Colors.grey),
 
                           decoration: InputDecoration(
-                              hintText: globals.mainUser.occupation,
+                              hintText: globals.mainUser.age,
                               contentPadding: EdgeInsets.only(
                                   right: SizeConfig.width(5), bottom: SizeConfig.height(8)),
                               border: InputBorder.none),

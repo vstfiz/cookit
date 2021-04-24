@@ -241,7 +241,7 @@ class _ContentState extends State<Content> {
     return SafeArea(
         child: WillPopScope(
           onWillPop: () {
-            Navigator.pop(context);
+              Navigator.pop(context);
           },
           child: Scaffold(
             backgroundColor:
@@ -259,13 +259,14 @@ class _ContentState extends State<Content> {
                             fit: BoxFit.cover,
                             image:
                                 NetworkImage(globals.selectedRecipe.imageUrl))),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: SizeConfig.width(440),
-                          height: SizeConfig.height(100),
-                          margin: EdgeInsets.only(
-                              left: 20, top: 35.0, bottom: 10.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: SizeConfig.width(440),
+                            height: SizeConfig.height(45),
+                            margin: EdgeInsets.only(
+                                left: 20, top: 35.0, bottom: 10.0),
                             child: Material(
                               color: Color.fromRGBO(
                                   255, 255, 255, 0.5019607843137255),
@@ -285,116 +286,117 @@ class _ContentState extends State<Content> {
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     prefixIcon:
-                                        Icon(Icons.search, color: Colors.white),
+                                    Icon(Icons.search, color: Colors.white),
                                     contentPadding:
-                                        EdgeInsets.only(left: 15.0, top: 15.0),
+                                    EdgeInsets.only(left: 15.0, top: 15.0),
                                     hintText: 'Search for recipes and channels',
                                     hintStyle: TextStyle(
                                         color: Colors.white, fontSize: 18)),
                               ),
                             ),
-                        ),
-                        Container(
-                          width: SizeConfig.width(440),
-                          height: SizeConfig.width(500),
-                          child: GestureDetector(
-                            onHorizontalDragEnd: (dragEndDetails) {
-                              if (dragEndDetails.primaryVelocity < 0) {
-                                if (index == 1) {
-                                  setState(() {
-                                    index += 1;
-                                  });
-                                  _goForward();
-                                } else if (index == 2) {
-                                  setState(() {
-                                    index += 1;
-                                  });
-                                  _goForward();
-                                }
-                              } else {
-                                if (index == 2) {
-                                  setState(() {
-                                    index -= 1;
-                                  });
-                                  _goBack();
-                                } else if (index == 3) {
-                                  setState(() {
-                                    index -= 1;
-                                  });
-                                  _goBack();
-                                }
-                              }
-                            },
-                            child: PageView.builder(itemCount: 3,
-                                controller: _pageController,
-                                // NeverScrollableScrollPhysics disables PageView built-in gestures.
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index){
-                              return widgets[index];
-                                }),
                           ),
-                        ),
-                        // Container(
-                        //   height: SizeConfig.height(300),
-                        //   color: Colors.red,
-                        //   width: SizeConfig.width(440),
-                        //   padding: EdgeInsets.symmetric(vertical: SizeConfig.height(60)),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //
-                        //     ],
-                        //   ),
-                        // )
-                        Container(
-                          width: SizeConfig.width(440),
-                          padding: EdgeInsets.only(top: 15.0, left: 30.0),
-                          margin: EdgeInsets.only(top: 40),
-                          height: 180.0,
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              _foodCard(
-                                  globals.recipes[0].name,
-                                  globals.recipes[0].chef_name,
-                                  globals.recipes[0].imageUrl,
-                                  globals.recipes[0].chef_dp),
-                              SizedBox(width: 30.0),
-                              _foodCard(
-                                  globals.recipes[1].name,
-                                  globals.recipes[1].chef_name,
-                                  globals.recipes[1].imageUrl,
-                                  globals.recipes[1].chef_dp),
-                              SizedBox(width: 30.0),
-                              _foodCard(
-                                  globals.recipes[2].name,
-                                  globals.recipes[2].chef_name,
-                                  globals.recipes[2].imageUrl,
-                                  globals.recipes[2].chef_dp),
-                              SizedBox(width: 30.0),
-                              _foodCard(
-                                  globals.recipes[3].name,
-                                  globals.recipes[3].chef_name,
-                                  globals.recipes[3].imageUrl,
-                                  globals.recipes[3].chef_dp),
-                              SizedBox(width: 30.0),
-                              _foodCard(
-                                  globals.recipes[4].name,
-                                  globals.recipes[4].chef_name,
-                                  globals.recipes[4].imageUrl,
-                                  globals.recipes[4].chef_dp),
-                              SizedBox(width: 30.0),
-                              _foodCard(
-                                  globals.recipes[5].name,
-                                  globals.recipes[5].chef_name,
-                                  globals.recipes[5].imageUrl,
-                                  globals.recipes[5].chef_dp),
-                              SizedBox(width: 30.0),
-                            ],
+                          Container(
+                            width: SizeConfig.width(440),
+                            height: SizeConfig.width(500),
+                            child: GestureDetector(
+                              onHorizontalDragEnd: (dragEndDetails) {
+                                if (dragEndDetails.primaryVelocity < 0) {
+                                  if (index == 1) {
+                                    setState(() {
+                                      index += 1;
+                                    });
+                                    _goForward();
+                                  } else if (index == 2) {
+                                    setState(() {
+                                      index += 1;
+                                    });
+                                    _goForward();
+                                  }
+                                } else {
+                                  if (index == 2) {
+                                    setState(() {
+                                      index -= 1;
+                                    });
+                                    _goBack();
+                                  } else if (index == 3) {
+                                    setState(() {
+                                      index -= 1;
+                                    });
+                                    _goBack();
+                                  }
+                                }
+                              },
+                              child: PageView.builder(itemCount: 3,
+                                  controller: _pageController,
+                                  // NeverScrollableScrollPhysics disables PageView built-in gestures.
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index){
+                                    return widgets[index];
+                                  }),
+                            ),
                           ),
-                        )
-                      ],
+                          // Container(
+                          //   height: SizeConfig.height(300),
+                          //   color: Colors.red,
+                          //   width: SizeConfig.width(440),
+                          //   padding: EdgeInsets.symmetric(vertical: SizeConfig.height(60)),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.start,
+                          //     children: [
+                          //
+                          //     ],
+                          //   ),
+                          // )
+                          Container(
+                            width: SizeConfig.width(440),
+                            padding: EdgeInsets.only(top: 15.0, left: 30.0),
+                            margin: EdgeInsets.only(top: 40),
+                            height: 180.0,
+                            child: ListView(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              children: <Widget>[
+                                _foodCard(
+                                    globals.recipes[0].name,
+                                    globals.recipes[0].chef_name,
+                                    globals.recipes[0].imageUrl,
+                                    globals.recipes[0].chef_dp),
+                                SizedBox(width: 30.0),
+                                _foodCard(
+                                    globals.recipes[1].name,
+                                    globals.recipes[1].chef_name,
+                                    globals.recipes[1].imageUrl,
+                                    globals.recipes[1].chef_dp),
+                                SizedBox(width: 30.0),
+                                _foodCard(
+                                    globals.recipes[2].name,
+                                    globals.recipes[2].chef_name,
+                                    globals.recipes[2].imageUrl,
+                                    globals.recipes[2].chef_dp),
+                                SizedBox(width: 30.0),
+                                _foodCard(
+                                    globals.recipes[3].name,
+                                    globals.recipes[3].chef_name,
+                                    globals.recipes[3].imageUrl,
+                                    globals.recipes[3].chef_dp),
+                                SizedBox(width: 30.0),
+                                _foodCard(
+                                    globals.recipes[4].name,
+                                    globals.recipes[4].chef_name,
+                                    globals.recipes[4].imageUrl,
+                                    globals.recipes[4].chef_dp),
+                                SizedBox(width: 30.0),
+                                _foodCard(
+                                    globals.recipes[5].name,
+                                    globals.recipes[5].chef_name,
+                                    globals.recipes[5].imageUrl,
+                                    globals.recipes[5].chef_dp),
+                                SizedBox(width: 30.0),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
           ),

@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     globals.darkModeOn = sharedPreferences.getBool("darkMode");
     if (globals.darkModeOn == null) {
-      globals.darkModeOn = true;
+      globals.darkModeOn = false;
     }
   }
 

@@ -68,13 +68,7 @@ class _SearchingState extends State<Searching> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () {
-          Navigator.maybePop(context);
-          // Navigator.push(context, MaterialPageRoute(builder: (context){return DashBoard();}));
-          return Future<bool>.value(false);
-        },
-        child: SafeArea(
+    return SafeArea(
             child: Scaffold(
               backgroundColor:
                   globals.darkModeOn ? Colors.grey[800] : Colors.white,
@@ -194,27 +188,6 @@ class _SearchingState extends State<Searching> {
                         }).toList(),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width -
-                              SizeConfig.width(120),
-                          top: MediaQuery.of(context).size.height -
-                              SizeConfig.height(150)),
-                      height: SizeConfig.height(100),
-                      width: SizeConfig.width(100),
-                      decoration: BoxDecoration(
-                          color: Colors.blueAccent, shape: BoxShape.circle),
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.clear,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -222,6 +195,6 @@ class _SearchingState extends State<Searching> {
             left: true,
             top: true,
             right: true,
-            bottom: true));
+            bottom: true);
   }
 }

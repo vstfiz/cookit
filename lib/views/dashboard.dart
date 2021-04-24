@@ -42,11 +42,11 @@ class _DashboardState extends State<Dashboard> {
     print(date.day);
     print(monthNames[date.month - 1]);
     currDate = monthNames[date.month - 1] + " " + date.day.toString();
-   getRec();
+    getRec();
     super.initState();
   }
 
-  getRec() async{
+  getRec() async {
     await fdb.FirebaseDB.getRecipeDashBoard();
     await fdb.FirebaseDB.getBestOfTheDay();
     setState(() {
@@ -109,7 +109,9 @@ class _DashboardState extends State<Dashboard> {
             exitDialog();
           },
           child: Scaffold(
-            backgroundColor: isLoading?Color(0xFFFFF5EB).withOpacity(0.5):Color(0xFFFFF5EB),
+            backgroundColor: isLoading
+                ? Color(0xFFFFF5EB).withOpacity(0.5)
+                : Color(0xFFFFF5EB),
             body: isLoading
                 ? _loadingDialog()
                 : SingleChildScrollView(
@@ -129,33 +131,34 @@ class _DashboardState extends State<Dashboard> {
                                       width: SizeConfig.width(400),
                                       margin: EdgeInsets.only(
                                           left: 20, top: 35.0, bottom: 10.0),
-                                        child: Material(
-                                          elevation: 10.0,
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          child: TextFormField(
-                                            onChanged: (searchValue){
-                                              print(searchValue);
-                                            },
-                                            onTap: (){
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context) {
-                                                    return Searching();
-                                                  }));
-                                            },
-                                            enabled: true ,
-                                            decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                prefixIcon: Icon(Icons.search,
-                                                    color: Colors.black),
-                                                contentPadding: EdgeInsets.only(
-                                                    left: 15.0, top: 15.0),
-                                                hintText:
-                                                    'Search for recipes and channels',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.grey)),
-                                          ),
+                                      child: Material(
+                                        elevation: 10.0,
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                        child: TextFormField(
+                                          onChanged: (searchValue) {
+                                            print(searchValue);
+                                          },
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return Searching();
+                                            }));
+                                          },
+                                          enabled: true,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              prefixIcon: Icon(Icons.search,
+                                                  color: Colors.black),
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15.0, top: 15.0),
+                                              hintText:
+                                                  'Search for recipes and channels',
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey)),
                                         ),
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -237,7 +240,7 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                         Container(
                                           margin: EdgeInsets.only(
-                                              left: SizeConfig.width(175.5)),
+                                              left: SizeConfig.width(173)),
                                           width:
                                               10 * SizeConfig.heightMultiplier,
                                           padding: EdgeInsets.symmetric(
@@ -246,7 +249,7 @@ class _DashboardState extends State<Dashboard> {
                                           decoration: BoxDecoration(
                                             color: globals.darkModeOn
                                                 ? Colors.pink
-                                                : Colors.black,
+                                                : Colors.blue,
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(3.0 *
                                                   SizeConfig.heightMultiplier),
@@ -266,7 +269,7 @@ class _DashboardState extends State<Dashboard> {
                                               Navigator.of(context).push(
                                                   new MaterialPageRoute(
                                                       builder: (context) {
-                                                return Content();
+                                                return Settings();
                                               }));
                                             },
                                           ),
@@ -287,41 +290,107 @@ class _DashboardState extends State<Dashboard> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     children: <Widget>[
-                                      _foodCard(
-                                          globals.recipes[0].name,
-                                          globals.recipes[0].chef_name,
-                                          globals.recipes[0].imageUrl,
-                                          globals.recipes[0].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                              globals.recipes[0];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return Content();
+                                          }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[0].name,
+                                            globals.recipes[0].chef_name,
+                                            globals.recipes[0].imageUrl,
+                                            globals.recipes[0].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
-                                      _foodCard(
-                                          globals.recipes[1].name,
-                                          globals.recipes[1].chef_name,
-                                          globals.recipes[1].imageUrl,
-                                          globals.recipes[1].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                          globals.recipes[1];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Content();
+                                                  }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[1].name,
+                                            globals.recipes[1].chef_name,
+                                            globals.recipes[1].imageUrl,
+                                            globals.recipes[1].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
-                                      _foodCard(
-                                          globals.recipes[2].name,
-                                          globals.recipes[2].chef_name,
-                                          globals.recipes[2].imageUrl,
-                                          globals.recipes[2].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                          globals.recipes[2];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Content();
+                                                  }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[2].name,
+                                            globals.recipes[2].chef_name,
+                                            globals.recipes[2].imageUrl,
+                                            globals.recipes[2].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
-                                      _foodCard(
-                                          globals.recipes[3].name,
-                                          globals.recipes[3].chef_name,
-                                          globals.recipes[3].imageUrl,
-                                          globals.recipes[3].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                          globals.recipes[3];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Content();
+                                                  }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[3].name,
+                                            globals.recipes[3].chef_name,
+                                            globals.recipes[3].imageUrl,
+                                            globals.recipes[3].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
-                                      _foodCard(
-                                          globals.recipes[4].name,
-                                          globals.recipes[4].chef_name,
-                                          globals.recipes[4].imageUrl,
-                                          globals.recipes[4].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                          globals.recipes[4];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Content();
+                                                  }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[4].name,
+                                            globals.recipes[4].chef_name,
+                                            globals.recipes[4].imageUrl,
+                                            globals.recipes[4].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
-                                      _foodCard(
-                                          globals.recipes[5].name,
-                                          globals.recipes[5].chef_name,
-                                          globals.recipes[5].imageUrl,
-                                          globals.recipes[5].chef_dp),
+                                      TextButton(
+                                        onPressed: () {
+                                          globals.selectedRecipe =
+                                          globals.recipes[5];
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return Content();
+                                                  }));
+                                        },
+                                        child: _foodCard(
+                                            globals.recipes[5].name,
+                                            globals.recipes[5].chef_name,
+                                            globals.recipes[5].imageUrl,
+                                            globals.recipes[5].chef_dp),
+                                      ),
                                       SizedBox(width: 30.0),
                                     ],
                                   ),
@@ -358,41 +427,48 @@ class _DashboardState extends State<Dashboard> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                              child: CachedNetworkImage(
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                      height: SizeConfig.height(420),
-                                      width: MediaQuery.of(context).size.width - SizeConfig.width(20),
-                                      margin: EdgeInsets.only(left: SizeConfig.width(10)),
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover),
-                                          shape: BoxShape.circle),
-                                    ),
-                                placeholder: (context, url) => Center(
-                                  child: Container(
-                                    height: SizeConfig.height(25),
-                                    width: SizeConfig.width(25),
-                                    child: CircularProgressIndicator(),
+                              child: TextButton(
+                                onPressed: () {
+                                  globals.selectedRecipe = globals.bestOfTheDay;
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                    return Content();
+                                  }));
+                                },
+                                child: CachedNetworkImage(
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    height: SizeConfig.height(420),
+                                    width: MediaQuery.of(context).size.width -
+                                        SizeConfig.width(20),
+                                    margin: EdgeInsets.only(
+                                        left: SizeConfig.width(10)),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle),
                                   ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Icon(
-                                      Icons.error,
-                                      size: 18,
+                                  placeholder: (context, url) => Center(
+                                    child: Container(
+                                      height: SizeConfig.height(25),
+                                      width: SizeConfig.width(25),
+                                      child: CircularProgressIndicator(),
                                     ),
-                                imageUrl: globals.bestOfTheDay.imageUrl,
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(
+                                    Icons.error,
+                                    size: 18,
+                                  ),
+                                  imageUrl: globals.bestOfTheDay.imageUrl,
+                                ),
                               ),
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(128, 128, 128, 0.6),
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-
-                                margin:
-                                    EdgeInsets.only(top: 300.0, left: 60.0),
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(128, 128, 128, 0.6),
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin: EdgeInsets.only(top: 300.0, left: 60.0),
                                 child: Column(
                                   children: <Widget>[
                                     Text(
@@ -439,17 +515,15 @@ class _DashboardState extends State<Dashboard> {
       child: Row(
         children: <Widget>[
           CachedNetworkImage(
-            imageBuilder: (context, imageProvider) =>
-                Container(
-                  margin: EdgeInsets.only(left: 10,top: 10,bottom: 10),
-                  height: SizeConfig.height(130),
-                  width: SizeConfig.width(130),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover),
-                      shape: BoxShape.circle),
-                ),
+            imageBuilder: (context, imageProvider) => Container(
+              margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+              height: SizeConfig.height(130),
+              width: SizeConfig.width(130),
+              decoration: BoxDecoration(
+                  image:
+                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                  shape: BoxShape.circle),
+            ),
             placeholder: (context, url) => Center(
               child: Container(
                 height: SizeConfig.height(40),
@@ -457,11 +531,10 @@ class _DashboardState extends State<Dashboard> {
                 child: CircularProgressIndicator(),
               ),
             ),
-            errorWidget: (context, url, error) =>
-                Icon(
-                  Icons.error,
-                  size: 18,
-                ),
+            errorWidget: (context, url, error) => Icon(
+              Icons.error,
+              size: 18,
+            ),
             imageUrl: url,
           ),
           SizedBox(width: 40.0),
@@ -472,7 +545,12 @@ class _DashboardState extends State<Dashboard> {
                 width: SizeConfig.width(160),
                 child: Text(
                   name,
-                  style: TextStyle(fontFamily: 'Quicksand', fontSize: 18,),softWrap: true,
+                  style: TextStyle(
+                    fontFamily: 'Quicksand',
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                  softWrap: true,
                 ),
               ),
               SizedBox(height: 10.0),
@@ -486,16 +564,14 @@ class _DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   CachedNetworkImage(
-                    imageBuilder: (context, imageProvider) =>
-                        Container(
-                          height: SizeConfig.height(25),
-                          width: SizeConfig.width(25),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover),
-                              shape: BoxShape.circle),
-                        ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: SizeConfig.height(25),
+                      width: SizeConfig.width(25),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                          shape: BoxShape.circle),
+                    ),
                     placeholder: (context, url) => Center(
                       child: Container(
                         height: SizeConfig.height(25),
@@ -503,16 +579,14 @@ class _DashboardState extends State<Dashboard> {
                         child: CircularProgressIndicator(),
                       ),
                     ),
-                    errorWidget: (context, url, error) =>
-                        Icon(
-                          Icons.error,
-                          size: 18,
-                        ),
+                    errorWidget: (context, url, error) => Icon(
+                      Icons.error,
+                      size: 18,
+                    ),
                     imageUrl: chef_url,
                   ),
                   SizedBox(width: 20.0),
-                  Text(chef,
-                      style: TextStyle(fontFamily: 'Quicksand'))
+                  Text(chef, style: TextStyle(fontFamily: 'Quicksand',color: Colors.black),)
                 ],
               )
             ],
