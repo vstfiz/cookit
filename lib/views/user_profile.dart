@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
 
+import 'edit_profile.dart';
+
 class UserProfile extends StatefulWidget {
   @override
   _UserProfileState createState() => _UserProfileState();
@@ -14,35 +16,53 @@ class _UserProfileState extends State<UserProfile> {
     return SafeArea(
         top: true,
         child: WillPopScope(
-          onWillPop: () {},
+          onWillPop: () {
+            Navigator.pop(context);
+          },
           child: Scaffold(
             backgroundColor:
                 globals.darkModeOn ? Colors.grey[850] : Colors.white,
             body: Stack(
               children: [
                 Container(
-                  width: SizeConfig.width(480),
-                  height: SizeConfig.height(1013.3333333333334) / 4.7,
-                  color: Colors.red,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: SizeConfig.width(10),bottom: SizeConfig.height(960)),
-                        child: IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.arrow_back,size: 40,),
+                    width: SizeConfig.width(480),
+                    height: SizeConfig.height(1013.3333333333334) / 4.7,
+                    color: Colors.red,
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              left: SizeConfig.width(10),
+                              bottom: SizeConfig.height(960)),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 40,
+                            ),
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: SizeConfig.width(360),bottom: SizeConfig.height(960)),
-                        child: IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.edit,size: 40,),
+                        Container(
+                          margin: EdgeInsets.only(
+                              left: SizeConfig.width(360),
+                              bottom: SizeConfig.height(960)),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                  new MaterialPageRoute(builder: (context) {
+                                return EditProfile();
+                              }));
+                            },
+                            icon: Icon(
+                              Icons.edit,
+                              size: 40,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ),
+                      ],
+                    )),
                 Container(
                   margin: EdgeInsets.only(
                       left: SizeConfig.width(360) / 2,

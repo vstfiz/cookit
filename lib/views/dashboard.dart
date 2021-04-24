@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
 import 'package:cookit/views/user_profile.dart';
+import 'package:cookit/views/settings.dart';
+import 'package:flutter/services.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -38,6 +40,41 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
+
+  Future<void> exitDialog() {
+    return showDialog<void>(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              title: Text(
+                "Exit", style: TextStyle(fontSize: 30, fontFamily: "Livvic"),),
+              content: Text("Do you want to exit ?",
+                style: TextStyle(fontSize: 20, fontFamily: "Livvic"),),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancel", style: TextStyle(fontSize: 20,
+                      fontFamily: "Livvic",
+                      color: Colors.grey[800]),),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                  child: Text("Exit", style: TextStyle(fontSize: 20,
+                      fontFamily: "Livvic",
+                      color: Colors.grey[800]),),
+                )
+              ],
+            )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,7 +83,9 @@ class _DashboardState extends State<Dashboard> {
         right: true,
         left: true,
         child: WillPopScope(
-          onWillPop: () {},
+          onWillPop: () {
+            exitDialog();
+          },
           child: Scaffold(
             backgroundColor: Color(0xFFFFF5EB),
             body: SingleChildScrollView(
@@ -162,7 +201,34 @@ class _DashboardState extends State<Dashboard> {
                                               fontFamily: 'Timesroman',
                                               fontWeight: FontWeight.bold)),
                                     ],
-                                  )
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: SizeConfig.width(175.5)),
+                                    width: 10 * SizeConfig.heightMultiplier,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1 * SizeConfig.heightMultiplier),
+                                    decoration: BoxDecoration(
+                                      color: globals.darkModeOn ? Colors.pink : Colors.black,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            3.0 * SizeConfig.heightMultiplier),
+                                        bottomLeft: Radius.circular(
+                                            3.0 * SizeConfig.heightMultiplier),
+                                      ),
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.settings,
+                                        color: Colors.white,
+                                        size: 6 * SizeConfig.imageSizeMultiplier,
+                                      ),
+                                      onPressed: (){
+                                        Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+                                          return Settings();
+                                        }));
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

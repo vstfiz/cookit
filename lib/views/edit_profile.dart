@@ -14,11 +14,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:cookit/util/size_config.dart';
 
-class UserProfile extends StatefulWidget {
-  _UserProfileState createState() => _UserProfileState();
+class EditProfile extends StatefulWidget {
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _EditProfileState extends State<EditProfile> {
   bool isLoading = true;
   bool field1 = false;
   bool field2 = false;
