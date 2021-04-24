@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
         return Future<bool>.value(false);
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: globals.darkModeOn?Colors.grey[850]:Colors.white,
         body: SingleChildScrollView(
           child: Builder(
             builder: (context) =>
@@ -110,7 +110,7 @@ class _LoginState extends State<Login> {
                   .width,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/background.jpg"),
+                      image: AssetImage("assets/background.png"),
                       fit: BoxFit.cover)),
             ),
           ),
@@ -122,6 +122,7 @@ class _LoginState extends State<Login> {
               height: SizeConfig.height(300),
               width: SizeConfig.width(300),
               child: Card(
+                color:  globals.darkModeOn?Colors.black:Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25)),
                 elevation: 15,
@@ -142,22 +143,22 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.only(left: SizeConfig.width(30), top: SizeConfig.height(500)),
                 child: Divider(
                   thickness: 2,
-                  color: Colors.black,
+                  color: globals.darkModeOn?Colors.white:Colors.black,
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(left: SizeConfig.width(15), top: SizeConfig.height(500)),
                 child: Text(
                   "OR",
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25,color:  globals.darkModeOn?Colors.white:Colors.black),
                 ),
               ),
               Container(
-                width: SizeConfig.width(150),
+                width: SizeConfig.width(120),
                 margin: EdgeInsets.only(left: SizeConfig.width(15), top: SizeConfig.height(500)),
                 child: Divider(
                   thickness: 2,
-                  color: Colors.black,
+                  color:globals.darkModeOn?Colors.white:Colors.black,
                 ),
               ),
             ],
@@ -303,7 +304,7 @@ class _LoginState extends State<Login> {
                         : Text(
                       "Don't have an account?",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: globals.darkModeOn?Colors.white:Colors.black,
                           fontFamily: "Livvic",
                           fontSize: 25),
                     ),
@@ -351,7 +352,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: Colors.blueAccent,
+                            color: globals.darkModeOn?Colors.pink:globals.darkModeOn?Colors.pink:Colors.blueAccent,
                             fontFamily: "Livvic",
                             fontSize: 25),
                       ),
@@ -440,7 +441,7 @@ class _LoginState extends State<Login> {
                 keyboardType: TextInputType.phone,
                 style: TextStyle(fontFamily: "Livvic", fontSize: 25),
                 decoration: InputDecoration(
-                    hintText: "4-Digit OTP",
+                    hintText: "6-Digit OTP",
                     prefixIcon: Icon(Icons.vpn_key),
                     contentPadding: EdgeInsets.only(right: SizeConfig.width(5.0), top: SizeConfig.height(8)),
                     border: InputBorder.none),
@@ -457,7 +458,7 @@ class _LoginState extends State<Login> {
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: "Livvic",
-                    color: Colors.blue),
+                    color: globals.darkModeOn?Colors.pink:Colors.blue),
               ),
             ),
           )
@@ -468,11 +469,13 @@ class _LoginState extends State<Login> {
           Container(
             width: SizeConfig.width(150),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), color: Colors.blue),
+                borderRadius: BorderRadius.circular(15), color: globals.darkModeOn?Colors.pink:Colors.blue),
             child: FlatButton(
               onPressed: () async {
                 if (globals.otpSent) {
                   globals.isOtpLogin = true;
+                  FirebaseUser u = await signInWithPhone(globals.otpController.text);
+                  fdb.FirebaseDB.getUserDetails(u.uid, context);
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
@@ -481,8 +484,7 @@ class _LoginState extends State<Login> {
                   setState(() {
                     globals.otpSent = true;
                   });
-                  FirebaseUser user = await signInWithPhone(countryCode+globals.mobileController.text);
-                  fdb.FirebaseDB.getUserDetails(user.uid, context);
+                  await verifyPhone(countryCode+globals.mobileController.text);
                 }
               },
               child: globals.otpSent
@@ -577,7 +579,7 @@ class _LoginState extends State<Login> {
           loginProgress ? _inProgress() : Container(
             width: SizeConfig.width(100),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25), color: Colors.blue),
+                borderRadius: BorderRadius.circular(25), color: globals.darkModeOn?Colors.pink:Colors.blue),
             child: FlatButton(
               onPressed: () async {
                 globals.isEmailLogin = true;
@@ -636,7 +638,7 @@ class _LoginState extends State<Login> {
           Container(
             width: SizeConfig.width(200),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25), color: Colors.blue),
+                borderRadius: BorderRadius.circular(25), color: globals.darkModeOn?Colors.pink:Colors.blue),
             child: FlatButton(
               child: Text(
                 "Send Recocery\nLink",
@@ -714,7 +716,7 @@ class _LoginState extends State<Login> {
               child: Text(
                 "Forgot Password?",
                 style: TextStyle(
-                    fontSize: 20, fontFamily: "Livvic", color: Colors.blue),
+                    fontSize: 20, fontFamily: "Livvic", color: globals.darkModeOn?Colors.pink:Colors.blue),
               ),
             ),
           ),
@@ -724,7 +726,7 @@ class _LoginState extends State<Login> {
           loginProgress ? _inProgress() : Container(
             width: 100,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25), color: Colors.blue),
+                borderRadius: BorderRadius.circular(25), color: globals.darkModeOn?Colors.pink:Colors.blue),
             child: FlatButton(
               onPressed: () async {
                 setState(() {
@@ -755,7 +757,7 @@ class _LoginState extends State<Login> {
         height: SizeConfig.height(50),
         child: CircularProgressIndicator(
           backgroundColor: Colors.grey,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+          valueColor: new AlwaysStoppedAnimation<Color>(globals.darkModeOn?Colors.pink:globals.darkModeOn?Colors.pink:Colors.blueAccent),
         ),
       ),
     );

@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:61061654133:android:10970ff0ab55474497fa3c",
+        "android_client_info": {
+          "package_name": "com.a.b"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61061654133-ota8frvtd925hi40eljlj1ag6bdlda47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeRcTfs4QUuDmLBp_KC3-WRWRbFWEIm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61061654133-ota8frvtd925hi40eljlj1ag6bdlda47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:61061654133:android:3c56eb2c1a7e70c097fa3c",
         "android_client_info": {
           "package_name": "tech.vstfiz.cookit"

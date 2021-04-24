@@ -10,8 +10,8 @@ final GoogleSignIn _googleSignIn = GoogleSignIn();
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseUser user;
 String yourClientId = "226970795296107";
-String yourRedirectUrl =
-    "https://www.facebook.com/connect/login_success.html";
+String yourRedirectUrl = "https://www.facebook.com/connect/login_success.html";
+String _verificationId = '';
 
 Future<FirebaseUser> signInWithGoogle() async {
   bool isSignedIn = await _googleSignIn.isSignedIn();
@@ -21,7 +21,7 @@ Future<FirebaseUser> signInWithGoogle() async {
     print("case 2");
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
+        await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
     var int = await auth.signInWithCredential(credential);
@@ -31,15 +31,15 @@ Future<FirebaseUser> signInWithGoogle() async {
   return user;
 }
 
-Future<FirebaseUser> signInWithPhone(String phone) async {
+Future<FirebaseUser> verifyPhone(String phone) async {
   print('recived phone ${phone}');
-  await auth.verifyPhoneNumber(phoneNumber: phone,
+  await auth.verifyPhoneNumber(
+      phoneNumber: phone,
       timeout: Duration(milliseconds: 60000),
-      verificationCompleted: (credential) async {
-
-      },
-      codeSent: (){
-    globals.otpSent = true;
+      verificationCompleted: (credential) async {},
+      codeSent: (String verificationId, [int foreceResendToken]) {
+        print(verificationId);
+        _verificationId = verificationId;
       },
       verificationFailed: (exception) {
         Fluttertoast.showToast(
@@ -50,21 +50,38 @@ Future<FirebaseUser> signInWithPhone(String phone) async {
       });
 }
 
+Future<FirebaseUser> signInWithPhone(String otp) async {
+  print('entered otp is ${otp}');
+  try {
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+      verificationId: _verificationId,
+      smsCode: otp,
+    );
+    final FirebaseUser user = (await auth.signInWithCredential(credential)).user;
+    print("Successfully signed in UID: ${user.uid}");
+    return user;
+
+  } catch (e) {
+    print("Failed to sign in: " + e.toString());
+  }
+}
+
+
 Future<FirebaseUser> signInWithFacebook(BuildContext context) async {
   print("metod chala");
   String result = await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) =>
-            CustomWebView(
+        builder: (context) => CustomWebView(
               selectedUrl:
-              'https://www.facebook.com/dialog/oauth?client_id=$yourClientId&redirect_uri=$yourRedirectUrl&response_type=token&scope=email,public_profile,',
+                  'https://www.facebook.com/dialog/oauth?client_id=$yourClientId&redirect_uri=$yourRedirectUrl&response_type=token&scope=email,public_profile,',
             ),
-        maintainState: true),);
+        maintainState: true),
+  );
   if (result != null) {
     try {
       final facebookAuthCred =
-      FacebookAuthProvider.getCredential(accessToken: result);
+          FacebookAuthProvider.getCredential(accessToken: result);
       AuthResult authResult = await auth.signInWithCredential(facebookAuthCred);
       user = authResult.user;
     } catch (e) {}
@@ -79,8 +96,8 @@ Future<FirebaseUser> signUpWithEmail(String email, String password) async {
 }
 
 Future<FirebaseUser> signInWithEmail(String email, String password) async {
-  AuthResult result = await auth.signInWithEmailAndPassword(
-      email: email, password: password);
+  AuthResult result =
+      await auth.signInWithEmailAndPassword(email: email, password: password);
   user = result.user;
   return result.user;
 }
@@ -90,7 +107,6 @@ Future<FirebaseUser> signOutWithGoogle() async {
   await auth.signOut();
   return null;
 }
-
 
 class CustomWebView extends StatefulWidget {
   final String selectedUrl;
