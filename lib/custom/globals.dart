@@ -8,7 +8,7 @@ import 'package:cookit/model/recipe.dart';
 
 User user = new User("", "", "", "", "", "", "");
 User mainUser = new User("", "", "", "", "", "", "");
-
+int count = 0;
 double width(double width) {}
 
 double height(double height) {}

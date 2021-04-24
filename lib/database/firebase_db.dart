@@ -109,7 +109,7 @@ class FirebaseDB {
     ref.add(userData);
   }
 
-  static Future<bool> updateDetails(name, mail, gender, phone, iAmA) async {
+  static Future<bool> updateDetails(name, mail, gender, phone, age,dp) async {
     Firestore firestore = Firestore.instance;
     QuerySnapshot querySnapshot = await firestore
         .collection('users')
@@ -121,9 +121,18 @@ class FirebaseDB {
     userData.putIfAbsent('email', () => mail);
     userData.putIfAbsent('gender', () => gender);
     userData.putIfAbsent('phone', () => phone);
-    userData.putIfAbsent('profession', () => iAmA);
+    userData.putIfAbsent('age', () => age);
+    userData.putIfAbsent('displayUrl', () => dp);
     userData
         .forEach((String k, String v) => print("k is: " + k + "v is  : " + v));
     var ref = firestore.collection('users').document(ds).updateData(userData);
+  }
+
+  static getRecipeCount() async{
+    print(globals.mainUser.uid);
+   QuerySnapshot qureySnapshots = await Firestore.instance.collection('recipes').where('reference',isEqualTo: globals.mainUser.uid).getDocuments();
+   int k = qureySnapshots.documents.length;
+    print(k);
+    globals.count = k;
   }
 }

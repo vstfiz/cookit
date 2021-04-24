@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:cookit/custom/globals.dart' as globals;
 import 'package:cookit/util/responsiveui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:cookit/util/size_config.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   _EditProfileState createState() => _EditProfileState();
@@ -30,6 +33,8 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _genderController = new TextEditingController();
   TextEditingController _occupationController = new TextEditingController();
+  String uploadedImageUrl;
+  File _image;
 
   @override
   void initState() {
@@ -39,6 +44,39 @@ class _EditProfileState extends State<EditProfile> {
     _phoneController.text = globals.mainUser.mobile;
     _genderController.text = globals.mainUser.gender;
     _occupationController.text = globals.mainUser.age;
+  }
+
+  Future getCameraImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+    print("Path Value : " + _image.path);
+  }
+
+  Future getGalleryImage() async {
+    final picker = ImagePicker();
+    final pickedFile =
+    await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
+  Future<String> uploadImage() async {
+    print("image upload running");
+    final StorageReference ref = FirebaseStorage.instance.ref().child(
+        'users/${globals.mainUser.uid}/${DateTime
+            .now()
+            .millisecondsSinceEpoch}.jpg');
+    final StorageUploadTask uploadTask = ref.put(_image);
+    await uploadTask.onComplete;
+    var uri = await ref.getDownloadURL();
+    uploadedImageUrl = uri.toString();
+    print(uploadedImageUrl);
   }
 
   @override
@@ -132,6 +170,14 @@ class _EditProfileState extends State<EditProfile> {
               decoration:
                   BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
               child: IconButton(
+                onPressed: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        _sourcePickerDialog(context),
+                  );
+
+                },
                 icon: Icon(
                   Icons.edit,
                   color: Colors.white,
@@ -525,7 +571,7 @@ class _EditProfileState extends State<EditProfile> {
               color: globals.darkModeOn ? Colors.pink : Colors.blue,
               borderRadius: BorderRadius.circular(15)),
           child: FlatButton(
-            onPressed: () {
+            onPressed: () async {
               if (_nameController.text != "" && _nameController.text != null) {
                 if (EmailValidator.validate(_emailController.text)) {
                   if (_genderController.text != "" &&
@@ -536,16 +582,31 @@ class _EditProfileState extends State<EditProfile> {
                         showDialog(
                             context: context,
                             builder: (context) => _loadingDialog());
-                        fdb.FirebaseDB.updateDetails(
-                                _nameController.text,
-                                _emailController.text,
-                                _phoneController.text,
-                                _phoneController.text,
-                                _occupationController.text)
-                            .whenComplete(() {
-                          Navigator.pop(context);
-                          SystemNavigator.pop();
-                        });
+                        if(_image == null){
+                          fdb.FirebaseDB.updateDetails(
+                              _nameController.text,
+                              _emailController.text,
+                              _phoneController.text,
+                              _phoneController.text,
+                              _occupationController.text,globals.mainUser.dp)
+                              .whenComplete(() {
+                            Navigator.pop(context);
+                            SystemNavigator.pop();
+                          });
+                        }
+                        else{
+                          await uploadImage();
+                          fdb.FirebaseDB.updateDetails(
+                              _nameController.text,
+                              _emailController.text,
+                              _phoneController.text,
+                              _phoneController.text,
+                              _occupationController.text,uploadedImageUrl)
+                              .whenComplete(() {
+                            Navigator.pop(context);
+                            SystemNavigator.pop();
+                          });
+                        }
                       } else {
                         Fluttertoast.showToast(
                             msg:
@@ -737,6 +798,82 @@ class _EditProfileState extends State<EditProfile> {
                   ))),
         )
       ],
+    );
+  }
+
+  Widget _sourcePickerDialog(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      backgroundColor: Colors.white,
+      content: Container(
+        height: SizeConfig.height(200),
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              top: SizeConfig.height(0),
+              right: SizeConfig.width(0),
+              left: SizeConfig.width(0),
+              child: Text("Choose Image Source",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: "Livvic", fontSize: 25)),
+            ),
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  height: SizeConfig.height(60),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getCameraImage();
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.width(20),
+                      ),
+                      Text(
+                        "Camera",
+                        style: TextStyle(fontFamily: "Livvic", fontSize: 25),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.height(20),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getGalleryImage();
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.add,
+                        color: Colors.grey,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.height(20),
+                      ),
+                      Text(
+                        "Gallery",
+                        style: TextStyle(fontFamily: "Livvic", fontSize: 25),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 

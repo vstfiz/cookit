@@ -142,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen> {
   navigator() {
     if (globals.user.email != null && globals.user.email != "") {
       fdb.FirebaseDB.getUserDetails(globals.user.uid, context);
-      print(globaleds.user.email);
+      print(globals.user.email);
     } else {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
         return Login();

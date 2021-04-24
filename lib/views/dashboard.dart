@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookit/util/size_config1.dart';
 import 'package:cookit/views/searching.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,6 +50,7 @@ class _DashboardState extends State<Dashboard> {
   getRec() async {
     await fdb.FirebaseDB.getRecipeDashBoard();
     await fdb.FirebaseDB.getBestOfTheDay();
+    await fdb.FirebaseDB.getRecipeCount();
     setState(() {
       isLoading = false;
     });

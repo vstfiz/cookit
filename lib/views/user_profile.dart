@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookit/util/size_config1.dart';
 import 'package:cookit/views/my_recipes.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,12 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  int count = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +106,7 @@ class _UserProfileState extends State<UserProfile> {
                     Icons.error,
                     size: 18,
                   ),
-                  imageUrl: globals.user.dp,
+                  imageUrl: globals.mainUser.dp,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -113,7 +119,7 @@ class _UserProfileState extends State<UserProfile> {
                       Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: Text(
-                          globals.user.name,
+                          globals.mainUser.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 28,
@@ -149,7 +155,7 @@ class _UserProfileState extends State<UserProfile> {
                           padding: EdgeInsets.symmetric(
                               vertical: SizeConfig.height(25)),
                           child: Text(
-                            '${count} Recipes',
+                            '${globals.count} Recipes',
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontFamily: 'Livvic',
