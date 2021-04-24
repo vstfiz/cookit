@@ -1,8 +1,10 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cookit/custom/globals.dart' as globals;
+import 'package:cookit/model/recipe.dart';
 import 'package:cookit/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookit/views/fill_details.dart';
@@ -31,6 +33,35 @@ class FirebaseDB {
   //     globals.algoTypeList.add(algorithmTypes);
   //   }
   // }
+
+  static Future<void> getRecipeDashBoard() async{
+    Firestore firestore = Firestore.instance;
+    var ref = firestore.collection('recipes');
+    QuerySnapshot querySnapshot = await ref.getDocuments();
+    int limit = querySnapshot.documents.length;
+    print('limit is'+limit.toString());
+    Random r = new Random();
+    List<DocumentSnapshot> ds = querySnapshot.documents;
+    List<Recipe> recipes = [];
+    var indexes = [];
+    while(indexes.length!=6){
+      int index = r.nextInt(limit);
+      if(!(indexes.contains(index))){
+        print('random is' + index.toString());
+        indexes.add(index);
+      }
+    }
+    for(int i=0;i<6;i++){
+      Recipe rec = new Recipe(ds[indexes[i]]['name'], ds[indexes[i]]['chef_name'], ds[indexes[i]]['reference'], ds[indexes[i]]['imageUrl'], ds[indexes[i]]['ingredients'], ds[indexes[i]]['chef_dp'], ds[indexes[i]]['recipe']);
+      print(rec.toString()+'\n\n');
+      recipes.add(rec);
+    }
+    globals.recipes = recipes;
+  }
+
+  static Future<void> getBestOfTheDay() async{
+
+  }
 
   // static Future<List<Algorithms>> getAlgos(String categoryName) async {
   //   Firestore firestore = Firestore.instance;

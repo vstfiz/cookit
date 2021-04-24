@@ -1,4 +1,5 @@
 import 'package:cookit/util/size_config1.dart';
+import 'package:cookit/views/my_recipes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
@@ -126,7 +127,11 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(
                         height: SizeConfig.height(80),
                       ),
-                      Container(
+                      TextButton(onPressed: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+                          return MyRecipes();
+                        }));
+                      }, child: Container(
                         width: SizeConfig.width(220),
                         height: SizeConfig.height(60),
                         decoration: BoxDecoration(
@@ -151,7 +156,7 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                         ),
-                      )
+                      ))
                     ],
                   ),
                 ),
