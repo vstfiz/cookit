@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cookit/custom/globals.dart' as globals;
 import 'package:cookit/util/size_config1.dart';
+import 'package:cookit/views/searching.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:flutter/material.dart';
@@ -239,7 +240,9 @@ class _ContentState extends State<Content> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: WillPopScope(
-          onWillPop: () {},
+          onWillPop: () {
+            Navigator.pop(context);
+          },
           child: Scaffold(
             backgroundColor:
                 isLoading ? Colors.white.withOpacity(0.5) : Colors.white,
@@ -263,14 +266,22 @@ class _ContentState extends State<Content> {
                           height: SizeConfig.height(100),
                           margin: EdgeInsets.only(
                               left: 20, top: 35.0, bottom: 10.0),
-                          child: TextButton(
                             child: Material(
                               color: Color.fromRGBO(
                                   255, 255, 255, 0.5019607843137255),
                               elevation: 10.0,
                               borderRadius: BorderRadius.circular(25.0),
                               child: TextFormField(
-                                enabled: false,
+                                onChanged: (searchValue){
+                                  print(searchValue);
+                                },
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return Searching();
+                                      }));
+                                },
+                                enabled: true,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     prefixIcon:
@@ -282,8 +293,6 @@ class _ContentState extends State<Content> {
                                         color: Colors.white, fontSize: 18)),
                               ),
                             ),
-                            onPressed: () {},
-                          ),
                         ),
                         Container(
                           width: SizeConfig.width(440),

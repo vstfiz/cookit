@@ -86,8 +86,12 @@ class _SearchingState extends State<Searching> {
                   children: <Widget>[
                     Container(
                         height: SizeConfig.height(50),
-                        width: MediaQuery.of(context).size.width - SizeConfig.width(20),
-                        margin: EdgeInsets.only(left: SizeConfig.width(10), right: SizeConfig.width(10), top: SizeConfig.height(10)),
+                        width: MediaQuery.of(context).size.width -
+                            SizeConfig.width(20),
+                        margin: EdgeInsets.only(
+                            left: SizeConfig.width(10),
+                            right: SizeConfig.width(10),
+                            top: SizeConfig.height(10)),
                         decoration: BoxDecoration(
                           color: globals.darkModeOn
                               ? Colors.grey[800]
@@ -137,7 +141,9 @@ class _SearchingState extends State<Searching> {
                         children: tempStorage.map((value) {
                           return Container(
                               height: SizeConfig.height(60),
-                              padding: EdgeInsets.only(left: SizeConfig.width(20), top: SizeConfig.height(20)),
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.width(20),
+                                  top: SizeConfig.height(20)),
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: globals.darkModeOn
@@ -146,28 +152,18 @@ class _SearchingState extends State<Searching> {
                               ),
                               child: FlatButton(
                                 onPressed: () {
-                                  // globals.selectedAlgo.name = value['name'];
-                                  // globals.selectedAlgo.category = value['category'];
-                                  // globals.selectedAlgo.content = value['content'];
-                                  // globals.selectedAlgo.progress = value;
-                                  // globals.selectedAlgo.imageUrl = value;
-                                  // globals.selectedAlgo.implInPython = value;
-                                  // globals.selectedAlgo.implInJava = value;
-                                  // globals.selectedAlgo.difficulty = value;
-                                  // Algorithms algorithmdes = new Algorithms(
-                                  //     value['difficulty'],
-                                  //     value['content'],
-                                  //     value['name'],
-                                  //     value['imageUrl'],
-                                  //     value['category_name'],
-                                  //     value['progress'],
-                                  //     value['implInJava'],
-                                  //     value['implInPython']);
-                                  // globals.selectedAlgo = algorithmdes;
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => Content()));
+                                  globals.selectedRecipe = new Recipe(
+                                      value['name'],
+                                      value['chef_name'],
+                                      value['reference'],
+                                      value['imageUrl'],
+                                      value['ingredients'],
+                                      value['chef_dp'],
+                                      value['recipe']);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Content()));
                                 },
                                 child: Row(
                                   children: <Widget>[
@@ -200,8 +196,10 @@ class _SearchingState extends State<Searching> {
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width - SizeConfig.width(120),
-                          top: MediaQuery.of(context).size.height - SizeConfig.height(150)),
+                          left: MediaQuery.of(context).size.width -
+                              SizeConfig.width(120),
+                          top: MediaQuery.of(context).size.height -
+                              SizeConfig.height(150)),
                       height: SizeConfig.height(100),
                       width: SizeConfig.width(100),
                       decoration: BoxDecoration(

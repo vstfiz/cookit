@@ -143,7 +143,7 @@ class _DashboardState extends State<Dashboard> {
                                                     return Searching();
                                                   }));
                                             },
-                                            enabled: false,
+                                            enabled: true ,
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 prefixIcon: Icon(Icons.search,
