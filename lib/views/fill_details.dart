@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-// import 'package:Varithms/custom_drop_down.dart' as cdd;
+import 'package:cookit/custom/custom_drop_down.dart' as cdd;
 import 'package:cookit/views/dashboard.dart';
 import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:cookit/custom/globals.dart' as globals;
@@ -31,6 +31,7 @@ class _FillDetailsState extends State<FillDetails> {
       "https://varithms.tech/storage/assets/display_picture_defaults/";
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _phoneController = new TextEditingController();
+  TextEditingController _ageController = new TextEditingController();
   TextEditingController _emailController = new TextEditingController();
 
   Future<bool> detailsChecker() {
@@ -169,10 +170,8 @@ class _FillDetailsState extends State<FillDetails> {
                   .width,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(globals.darkModeOn
-                          ? "assets/v2.png"
-                          : "assets/back_login.png"),
-                      fit: BoxFit.contain)),
+                      image: AssetImage("assets/background.png"),
+                      fit: BoxFit.cover )),
             ),
           ),
           Container(
@@ -193,7 +192,7 @@ class _FillDetailsState extends State<FillDetails> {
                       margin:
                       EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                       child: Text(
-                        "Hello! Learners, please fill these minor details and start your learning experience with us",
+                        "Hello! People, please fill these minor details and start your cooking journey with us",
                         softWrap: true,
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -226,7 +225,7 @@ class _FillDetailsState extends State<FillDetails> {
                       style: TextStyle(fontFamily: "Livvic",
                           color: globals.darkModeOn ? Colors.white : Colors
                               .grey),
-                      controller: _emailController,
+                      controller: globals.usernameController,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.mail,
                               color: globals.darkModeOn ? Colors.white : Colors
@@ -238,53 +237,53 @@ class _FillDetailsState extends State<FillDetails> {
                           contentPadding: EdgeInsets.all(5.0)),
                     ),
                   ),
-                  // Container(
-                  //   width: SizeConfig.width(350),
-                  //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  //   child: cdd.DropdownButton<String>(
-                  //     leftMargin: 187,
-                  //     prefixIcon: Icon(
-                  //       Icons.people,
-                  //       color: Colors.grey,
-                  //     ),
-                  //     icon: Icon(Icons.arrow_drop_down),
-                  //     value: dropdownValue,
-                  //     hint: Text(
-                  //       "Gender",
-                  //       style: TextStyle(
-                  //           fontFamily: "Livvic",
-                  //           fontSize: 17,
-                  //           color: globals.darkModeOn ? Colors.white : Colors
-                  //               .grey[650]),
-                  //     ),
-                  //     iconSize: 24,
-                  //     elevation: 16,
-                  //     underline: Container(
-                  //       height: SizeConfig.height(1),
-                  //       color: Colors.grey,
-                  //     ),
-                  //     style:
-                  //     TextStyle(fontFamily: "Livvic",
-                  //         color: globals.darkModeOn ? Colors.white : Colors
-                  //             .black),
-                  //     onChanged: (String newValue) {
-                  //       setState(() {
-                  //         dropdownValue = newValue;
-                  //         print(newValue);
-                  //       });
-                  //     },
-                  //     items: <String>['Male', 'Female', 'Prefer not to say']
-                  //         .map<cdd.DropdownMenuItem<String>>((String value) {
-                  //       return cdd.DropdownMenuItem<String>(
-                  //
-                  //         value: value,
-                  //         child: Text(value, style: TextStyle(
-                  //             color: globals.darkModeOn ? Colors.white : Colors
-                  //                 .grey),),
-                  //       );
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                  Container(
+                    width: SizeConfig.width(350),
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    child: cdd.DropdownButton<String>(
+                      leftMargin: 187,
+                      prefixIcon: Icon(
+                        Icons.people,
+                        color: Colors.grey,
+                      ),
+                      icon: Icon(Icons.arrow_drop_down),
+                      value: dropdownValue,
+                      hint: Text(
+                        "Gender",
+                        style: TextStyle(
+                            fontFamily: "Livvic",
+                            fontSize: 17,
+                            color: globals.darkModeOn ? Colors.white : Colors
+                                .grey[650]),
+                      ),
+                      iconSize: 24,
+                      elevation: 16,
+                      underline: Container(
+                        height: SizeConfig.height(1),
+                        color: Colors.grey,
+                      ),
+                      style:
+                      TextStyle(fontFamily: "Livvic",
+                          color: globals.darkModeOn ? Colors.white : Colors
+                              .black),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          print(newValue);
+                        });
+                      },
+                      items: <String>['Male', 'Female', 'Prefer not to say']
+                          .map<cdd.DropdownMenuItem<String>>((String value) {
+                        return cdd.DropdownMenuItem<String>(
+
+                          value: value,
+                          child: Text(value, style: TextStyle(
+                              color: globals.darkModeOn ? Colors.white : Colors
+                                  .grey),),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(left: SizeConfig.width(10),
                         bottom: SizeConfig.height(10),
@@ -306,55 +305,27 @@ class _FillDetailsState extends State<FillDetails> {
                           contentPadding: EdgeInsets.all(5.0)),
                     ),
                   ),
-                  // Container(
-                  //   width: SizeConfig.width(350),
-                  //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  //   child: cdd.DropdownButton<String>(
-                  //     leftMargin: 130,
-                  //     prefixIcon: Icon(
-                  //       Icons.supervised_user_circle,
-                  //       color: Colors.grey,
-                  //     ),
-                  //     icon: Icon(Icons.arrow_drop_down),
-                  //     value: dropdownValuePerson,
-                  //     hint: Text(
-                  //       "I am a",
-                  //       style: TextStyle(
-                  //           fontFamily: "Livvic",
-                  //           fontSize: 17,
-                  //           color: globals.darkModeOn ? Colors.white : Colors
-                  //               .grey[650]),
-                  //     ),
-                  //     iconSize: 24,
-                  //     elevation: 16,
-                  //     underline: Container(
-                  //       height: SizeConfig.height(1),
-                  //       color: Colors.grey,
-                  //     ),
-                  //     style:
-                  //     TextStyle(fontFamily: "Livvic",
-                  //         color: globals.darkModeOn ? Colors.white : Colors
-                  //             .black),
-                  //     onChanged: (String newValue) {
-                  //       setState(() {
-                  //         dropdownValuePerson = newValue;
-                  //         print(newValue);
-                  //       });
-                  //     },
-                  //     items: <String>[
-                  //       'Student',
-                  //       'Salaried Professional',
-                  //       'Self Employed Professional',
-                  //     ].map<cdd.DropdownMenuItem<String>>((String value) {
-                  //       return cdd.DropdownMenuItem<String>(
-                  //         value: value,
-                  //         child: Text(value, style: TextStyle(
-                  //             color: globals.darkModeOn ? Colors.white : Colors
-                  //                 .grey),),
-                  //       );
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                  Container(
+                    margin: EdgeInsets.only(left: SizeConfig.width(10),
+                        bottom: SizeConfig.height(10),
+                        right: SizeConfig.width(10)),
+                    child: TextField(
+                      style: TextStyle(fontFamily: "Livvic",
+                          color: globals.darkModeOn ? Colors.white : Colors
+                              .grey),
+                      keyboardType: TextInputType.phone,
+                      controller: _ageController,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person,
+                              color: globals.darkModeOn ? Colors.white : Colors
+                                  .grey),
+                          labelText: "Age",
+                          labelStyle: TextStyle(fontFamily: "Livvic",
+                              color: globals.darkModeOn ? Colors.white : Colors
+                                  .grey),
+                          contentPadding: EdgeInsets.all(5.0)),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -433,21 +404,20 @@ class _FillDetailsState extends State<FillDetails> {
                   print(_nameController.text.toString());
                   if (_nameController.text != "" &&
                       _nameController.text != null) {
-                    if (EmailValidator.validate(_emailController.text)) {
+                    if (EmailValidator.validate(globals.usernameController.text)) {
                       if (dropdownValue != "" && dropdownValue != null) {
                         if (validatePhone(_phoneController.text)) {
-                          if (dropdownValuePerson != "" &&
-                              dropdownValuePerson != null) {
+                          if (validateAge(_ageController.text)) {
                             print("reached");
                             showDialog(context: context,
                                 builder: (context) => _loadingDialog());
                             if (_image == null) {
                               fdb.FirebaseDB.createUser(
                                   _nameController.text,
-                                  _emailController.text,
+                                 globals.usernameController.text,
                                   dropdownValue,
                                   _phoneController.text,
-                                  dropdownValuePerson,
+                                  _ageController.text,
                                   defaultImageUrl +
                                       _nameController.text
                                           .substring(0, 1)
@@ -463,10 +433,10 @@ class _FillDetailsState extends State<FillDetails> {
                               await uploadImage();
                               fdb.FirebaseDB.createUser(
                                   _nameController.text,
-                                  _emailController.text,
+                                 globals.usernameController.text,
                                   dropdownValue,
                                   _phoneController.text,
-                                  dropdownValuePerson,
+                                  _ageController.text,
                                   uploadedImageUrl)
                                   .whenComplete(() {
                                 Navigator.push(
@@ -477,7 +447,7 @@ class _FillDetailsState extends State<FillDetails> {
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "No Occupation selected. Please select your Occupation",
+                                msg: "Invalid Age. Please select valid age.",
                                 toastLength: Toast.LENGTH_LONG);
                           }
                         } else {
@@ -621,5 +591,11 @@ class _FillDetailsState extends State<FillDetails> {
             )
         )
     );
+  }
+
+
+  bool validateAge(String age) {
+    RegExp regExp = new RegExp(r'(^[1-9]{1,3}$)');
+    return regExp.hasMatch(age);
   }
 }

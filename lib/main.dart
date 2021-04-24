@@ -5,6 +5,7 @@ import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:cookit/custom/globals.dart' as globals;
 import 'package:cookit/util/responsiveui.dart';
 import 'package:cookit/util/size_config.dart';
+import 'package:cookit/util/size_config1.dart' as s1;
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cookit/views/dashboard.dart';
 import 'package:cookit/views/user_profile.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
+            s1.SizeConfig().init(constraints, orientation);
             return MaterialApp(
               title: 'Varithms',
               theme: globals.darkModeOn ? ThemeData(

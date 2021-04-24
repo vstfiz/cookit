@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cookit/util/size_config.dart';
+import 'package:cookit/util/size_config1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
@@ -90,24 +90,25 @@ class _DashboardState extends State<Dashboard> {
                               SizedBox(
                                 width: 10,
                               ),
-                              Container(
-                                height: SizeConfig.height(40),
-                                width: SizeConfig.width(40),
-                                margin:
-                                    EdgeInsets.only(top: 35.0, bottom: 10.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.red, shape: BoxShape.circle),
-                                child: FlatButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        new MaterialPageRoute(
-                                            builder: (context) {
-                                      return UserProfile();
-                                    }));
-                                  },
-                                  child: CachedNetworkImage(
+                              // Container(
+                              //
+                              //       color: Colors.red,
+                              //   child:,
+                              //     child:
+
+                                  CachedNetworkImage(
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
+                                          child: FlatButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(
+                                                        builder: (context) {
+                                                          return UserProfile();
+                                                        }));
+                                              }) ,
+                                            margin:
+                                                  EdgeInsets.only(top: 35.0, bottom: 10.0),
                                       height: SizeConfig.height(40),
                                       width: SizeConfig.width(40),
                                       decoration: BoxDecoration(
@@ -118,8 +119,8 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                     placeholder: (context, url) => Center(
                                       child: Container(
-                                        height: SizeConfig.height(20),
-                                        width: SizeConfig.width(20),
+                                        height: SizeConfig.height(40),
+                                        width: SizeConfig.width(40),
                                         child: CircularProgressIndicator(),
                                       ),
                                     ),
@@ -129,8 +130,8 @@ class _DashboardState extends State<Dashboard> {
                                     ),
                                     imageUrl: globals.mainUser.dp,
                                   ),
-                                ),
-                              ),
+                                // ),
+                              // ),
                             ],
                           ),
                           SizedBox(height: 40.0),

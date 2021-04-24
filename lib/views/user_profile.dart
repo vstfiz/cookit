@@ -1,4 +1,4 @@
-import 'package:cookit/util/size_config.dart';
+import 'package:cookit/util/size_config1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
@@ -24,13 +24,24 @@ class _UserProfileState extends State<UserProfile> {
                   width: SizeConfig.width(480),
                   height: SizeConfig.height(1013.3333333333334) / 4.7,
                   color: Colors.red,
-                  child: Container(
-                    margin: EdgeInsets.only(left: SizeConfig.width(420),bottom: SizeConfig.height(960)),
-                    child: IconButton(
-                      onPressed: (){},
-                      icon: Icon(Icons.edit,size: 40,),
-                    ),
-                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: SizeConfig.width(10),bottom: SizeConfig.height(960)),
+                        child: IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.arrow_back,size: 40,),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: SizeConfig.width(360),bottom: SizeConfig.height(960)),
+                        child: IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.edit,size: 40,),
+                        ),
+                      ),
+                    ],
+                  )
                 ),
                 Container(
                   margin: EdgeInsets.only(

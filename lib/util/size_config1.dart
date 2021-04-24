@@ -41,10 +41,10 @@ class SizeConfig {
   }
 
   static double height(double val) {
-    return (val / 917.6470759830676) * screenHeight;
+    return (val / 1013.3333333333334) * screenHeight;
   }
 
   static double width(double val) {
-    return (val / 423.5294196844927) * screenWidth;
+    return (val / 480.0) * screenWidth;
   }
 }
