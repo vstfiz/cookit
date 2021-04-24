@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cookit/custom/globals.dart' as globals;
 import 'package:cookit/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookit/views/fill_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -98,31 +99,31 @@ class FirebaseDB {
   //   return globals.algoListForDashboard;
   // }
 
-  // static Future<User> getUserDetails(String uid, BuildContext context) async {
-  //   Firestore firestore = Firestore.instance;
-  //   var ref = firestore.collection('users');
-  //   print(uid);
-  //   QuerySnapshot querySnapshot =
-  //   await ref.where('uid', isEqualTo: uid).getDocuments();
-  //   List<DocumentSnapshot> ds = querySnapshot.documents;
-  //   if (ds.isEmpty) {
-  //     Navigator.push(
-  //         context, new MaterialPageRoute(builder: (context) => FillDetails()));
-  //   } else {
-  //     DocumentSnapshot document = ds.single;
-  //     globals.mainUser = new User(
-  //         document['name'],
-  //         document['profession'],
-  //         document['phone'],
-  //         document['email'],
-  //         document['gender'],
-  //         document['displayUrl'],
-  //         document['uid']);
-  //     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-  //       return Dashboard();
-  //     }));
-  //   }
-  // }
+  static Future<User> getUserDetails(String uid, BuildContext context) async {
+    Firestore firestore = Firestore.instance;
+    var ref = firestore.collection('users');
+    print(uid);
+    QuerySnapshot querySnapshot =
+    await ref.where('uid', isEqualTo: uid).getDocuments();
+    List<DocumentSnapshot> ds = querySnapshot.documents;
+    if (ds.isEmpty) {
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => FillDetails()));
+    } else {
+      DocumentSnapshot document = ds.single;
+      globals.mainUser = new User(
+          document['name'],
+          document['profession'],
+          document['phone'],
+          document['email'],
+          document['gender'],
+          document['displayUrl'],
+          document['uid']);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return Dashboard();
+      }));
+    }
+  }
 
   static Future<bool> createUser(name, mail, gender, phone, iAmA,
       imageUrl) async {

@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cookit/custom/globals.dart' as globals;
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -27,6 +29,25 @@ Future<FirebaseUser> signInWithGoogle() async {
     print("User" + user.toString());
   }
   return user;
+}
+
+Future<FirebaseUser> signInWithPhone(String phone) async {
+  print('recived phone ${phone}');
+  await auth.verifyPhoneNumber(phoneNumber: phone,
+      timeout: Duration(milliseconds: 60000),
+      verificationCompleted: (credential) async {
+
+      },
+      codeSent: (){
+    globals.otpSent = true;
+      },
+      verificationFailed: (exception) {
+        Fluttertoast.showToast(
+            msg: exception.message, toastLength: Toast.LENGTH_LONG);
+      },
+      codeAutoRetrievalTimeout: (msg) {
+        Fluttertoast.showToast(msg: msg);
+      });
 }
 
 Future<FirebaseUser> signInWithFacebook(BuildContext context) async {

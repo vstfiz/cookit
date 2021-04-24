@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
                     globals.user.uid = user.uid;
                     globals.user.name = user.displayName;
                   }
-                  return UserProfile();
+                  return SplashScreen();
                 },
               ),
             );
@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     globals.darkModeOn = sharedPreferences.getBool("darkMode");
     if (globals.darkModeOn == null) {
-      globals.darkModeOn = false;
+      globals.darkModeOn = true;
     }
   }
 
@@ -130,12 +130,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigator() {
       if (globals.user.email != null && globals.user.email != "") {
-        // fdb.FirebaseDB.getUserDetails(globals.user.uid, context);
+        fdb.FirebaseDB.getUserDetails(globals.user.uid, context);
         print(globals.user.email);
       }
       else {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return Dashboard();
+          return Login();
         }));
       }
     }

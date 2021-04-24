@@ -9,8 +9,9 @@ User mainUser = new User("", "", "", "", "", "", "");
 double width(double width) {}
 
 double height(double height) {}
-bool darkModeOn = false;
+bool darkModeOn = true;
 bool isPortrait;
+bool otpSent = false;
 bool isPlaying = false;
 bool isOtpLogin = false;
 List<String> i1 = [];
