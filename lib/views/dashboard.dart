@@ -586,7 +586,17 @@ class _DashboardState extends State<Dashboard> {
                     imageUrl: chef_url,
                   ),
                   SizedBox(width: 20.0),
-                  Text(chef, style: TextStyle(fontFamily: 'Quicksand',color: Colors.black),)
+                  Container(
+                    width: SizeConfig.width(120),
+                    child: Text(
+                      chef,
+                      style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          color: Colors.black
+                      ),
+                      softWrap: true,
+                    ),
+                  ),
                 ],
               )
             ],
