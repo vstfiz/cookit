@@ -74,12 +74,7 @@ flutter:
     - assets/splash/3.jpg
     - assets/splash/4.jpg
     - assets/splash/5.jpg
-    - assets/splash/1dark.jpg
-    - assets/splash/2dark.jpg
-    - assets/splash/3dark.jpg
-    - assets/splash/4dark.jpg
-    - assets/splash/5dark.jpg
-    - assets/background.png
+    - assets/background.jpg
     - assets/google.png
     - assets/facebook.png
     - assets/phone.png

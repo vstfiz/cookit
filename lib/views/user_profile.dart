@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookit/authentication/fire_auth.dart';
 import 'package:cookit/util/size_config1.dart';
 import 'package:cookit/views/my_recipes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cookit/custom/globals.dart' as globals;
+import 'package:flutter/services.dart';
 
 import 'edit_profile.dart';
 
@@ -216,15 +218,19 @@ class _UserProfileState extends State<UserProfile> {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(15)),
-                    child: Center(
-                      child: Text(
-                        "SIGN OUT",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Livvic',
-                            fontSize: 25),
+                    child: TextButton(
+                        onPressed: (){
+                          signOutWithGoogle().whenComplete(() {
+                            SystemNavigator.pop();
+                          });
+                        },
+                        child: Text("SIGN OUT",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Livvic',
+                              fontSize: 25),),
                       ),
-                    ),
+
                   ),
                   left: 10,
                   right: 10,

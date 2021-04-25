@@ -27,41 +27,8 @@ class _MyRecipesState extends State<MyRecipes> {
           backgroundColor: Color(0xFFFFF5EB),
           body: Stack(
             children: [
-              Container(
-                height: SizeConfig.height(826),
-                child: SingleChildScrollView(
-                  child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('recipes')
-                        .where('reference', isEqualTo: user.uid)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.blue),
-                          ),
-                        );
-                      } else {
-                        print(snapshot.data.documents.length);
-                        return Column(
-                          children: List.generate(
-                              snapshot.data.documents.length, (index) {
-                            return _foodCard(
-                                snapshot.data.documents[index]['name'],
-                                snapshot.data.documents[index]['imageUrl'],
-                                snapshot.data.documents[index]['chef_name'],
-                                snapshot.data.documents[index]['chef_dp']);
-                          }),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
               Positioned(
-                  bottom: 0,
+                  bottom: 10,
                   right: SizeConfig.width(170),
                   child: Container(
                     height: SizeConfig.height(70),
@@ -85,7 +52,46 @@ class _MyRecipesState extends State<MyRecipes> {
                       color: Colors.blue,
                       shape: BoxShape.circle,
                     ),
-                  ))
+                  )),
+              Positioned(
+                child: Container(
+                  height: SizeConfig.height(780),
+                  child: SingleChildScrollView(
+                    child: StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('recipes')
+                          .where('reference', isEqualTo: user.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: Text(
+                              'You don\'t have any recipe of your own.',
+                              style: TextStyle(
+                                  fontFamily: 'Livvic',
+                                  color: Colors.grey,
+                                  fontSize: 25),
+                            ),
+                          );
+                        } else {
+                          print(snapshot.data.documents.length);
+                          return Column(
+                            children: List.generate(
+                                snapshot.data.documents.length, (index) {
+                              return _foodCard(
+                                  snapshot.data.documents[index]['name'],
+                                  snapshot.data.documents[index]['imageUrl'],
+                                  snapshot.data.documents[index]['chef_name'],
+                                  snapshot.data.documents[index]['chef_dp']);
+                            }),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                top: 0,
+              ),
             ],
           ),
         ),
@@ -612,29 +618,58 @@ class FunkyOverlayState extends State<FunkyOverlay>
   }
 
   uploadRecipe(name, chef, ingredients, recipe) async {
-    _loadingDialog();
-    if(name != null && name != ''){
-      if(chef != null && chef != ''){
-        if(ingredients != null && ingredients.length != 0){
-          if(ingredients != null && ingredients.length != 0){
-            if(_image!= null){
-              if(_chefImage!= null){
+
+    if (name != null && name != '') {
+      if (chef != null && chef != '') {
+        if (ingredients != null && ingredients.length != 0) {
+          if (recipe != null && recipe.length != 0) {
+            if (_image != null) {
+              if (_chefImage != null) {
+                _loadingDialog();
                 String imageUrl = await uploadImage(_image);
                 String chef_dp = await uploadImage(_chefImage);
-                Recipe rec = new Recipe(name, chef, globals.mainUser.uid, imageUrl, ingredients, chef_dp, recipe);
+                Recipe rec = new Recipe(name, chef, globals.mainUser.uid,
+                    imageUrl, ingredients, chef_dp, recipe);
                 await fdb.FirebaseDB.addRecipe(rec);
                 print('uploaded');
                 Navigator.pop(context);
                 Navigator.pop(context);
-                Fluttertoast.showToast(msg: 'Recipe Uploaded Successfully',toastLength: Toast.LENGTH_LONG);
-
+                Fluttertoast.showToast(
+                    msg: 'Recipe Uploaded Successfully',
+                    toastLength: Toast.LENGTH_LONG);
               }
-              else{}
+              else {
+                _loadingDialog();
+                String imageUrl = await uploadImage(_image);
+                String chef_dp = globals.mainUser.dp;
+                Recipe rec = new Recipe(name, chef, globals.mainUser.uid,
+                    imageUrl, ingredients, chef_dp, recipe);
+                await fdb.FirebaseDB.addRecipe(rec);
+                print('uploaded');
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Fluttertoast.showToast(
+                    msg: 'Recipe Uploaded Successfully',
+                    toastLength: Toast.LENGTH_LONG);
+              }
+            }
+            else{
+              Fluttertoast.showToast(msg: 'Error Food Image not Selected',toastLength: Toast.LENGTH_LONG);
             }
           }
+          else{
+            Fluttertoast.showToast(msg: 'No Steps in the recipe has been added',toastLength: Toast.LENGTH_LONG);
+          }
+        }
+        else{
+          Fluttertoast.showToast(msg: 'No ingredients have been added',toastLength: Toast.LENGTH_LONG);
         }
       }
+      else{
+        Fluttertoast.showToast(msg: 'Invalid Chef\'s name, Please insert valid chef name',toastLength: Toast.LENGTH_LONG);
+      }
+    } else {
+      Fluttertoast.showToast(msg: 'Invalid Recipe Name',toastLength: Toast.LENGTH_LONG);
     }
-    else{}
   }
 }

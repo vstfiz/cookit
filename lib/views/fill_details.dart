@@ -170,7 +170,7 @@ class _FillDetailsState extends State<FillDetails> {
                   .width,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/background.png"),
+                      image: AssetImage("assets/background.jpg"),
                       fit: BoxFit.cover )),
             ),
           ),
@@ -183,150 +183,152 @@ class _FillDetailsState extends State<FillDetails> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               elevation: 8.0,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: SizeConfig.height(70),
-                  ),
-                  Container(
-                      margin:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                      child: Text(
-                        "Hello! People, please fill these minor details and start your cooking journey with us",
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: "Livvic",
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: SizeConfig.height(70),
+                    ),
+                    Container(
+                        margin:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                        child: Text(
+                          "Hello! People, please fill these minor details and start your cooking journey with us",
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontFamily: "Livvic",
+                              color: globals.darkModeOn ? Colors.white : Colors
+                                  .grey),
+                        )),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      child: TextField(
+                        controller: _nameController,
+                        style: TextStyle(fontFamily: "Livvic",
                             color: globals.darkModeOn ? Colors.white : Colors
                                 .grey),
-                      )),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    child: TextField(
-                      controller: _nameController,
-                      style: TextStyle(fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .grey),
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person,
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          labelText: "Name",
-                          labelStyle: TextStyle(fontFamily: "Livvic",
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          contentPadding: EdgeInsets.all(5.0)),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    child: TextField(
-                      style: TextStyle(fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .grey),
-                      controller: globals.usernameController,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.mail,
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          labelText: "E-mail",
-                          labelStyle: TextStyle(fontFamily: "Livvic",
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          contentPadding: EdgeInsets.all(5.0)),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.width(350),
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    child: cdd.DropdownButton<String>(
-                      leftMargin: 187,
-                      prefixIcon: Icon(
-                        Icons.people,
-                        color: Colors.grey,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person,
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            labelText: "Name",
+                            labelStyle: TextStyle(fontFamily: "Livvic",
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            contentPadding: EdgeInsets.all(5.0)),
                       ),
-                      icon: Icon(Icons.arrow_drop_down),
-                      value: dropdownValue,
-                      hint: Text(
-                        "Gender",
-                        style: TextStyle(
-                            fontFamily: "Livvic",
-                            fontSize: 17,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      child: TextField(
+                        style: TextStyle(fontFamily: "Livvic",
                             color: globals.darkModeOn ? Colors.white : Colors
-                                .grey[650]),
+                                .grey),
+                        controller: globals.usernameController,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.mail,
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(fontFamily: "Livvic",
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            contentPadding: EdgeInsets.all(5.0)),
                       ),
-                      iconSize: 24,
-                      elevation: 16,
-                      underline: Container(
-                        height: SizeConfig.height(1),
-                        color: Colors.grey,
-                      ),
-                      style:
-                      TextStyle(fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .black),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                          print(newValue);
-                        });
-                      },
-                      items: <String>['Male', 'Female', 'Prefer not to say']
-                          .map<cdd.DropdownMenuItem<String>>((String value) {
-                        return cdd.DropdownMenuItem<String>(
+                    ),
+                    Container(
+                      width: SizeConfig.width(350),
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      child: cdd.DropdownButton<String>(
+                        leftMargin: 187,
+                        prefixIcon: Icon(
+                          Icons.people,
+                          color: Colors.grey,
+                        ),
+                        icon: Icon(Icons.arrow_drop_down),
+                        value: dropdownValue,
+                        hint: Text(
+                          "Gender",
+                          style: TextStyle(
+                              fontFamily: "Livvic",
+                              fontSize: 17,
+                              color: globals.darkModeOn ? Colors.white : Colors
+                                  .grey[650]),
+                        ),
+                        iconSize: 24,
+                        elevation: 16,
+                        underline: Container(
+                          height: SizeConfig.height(1),
+                          color: Colors.grey,
+                        ),
+                        style:
+                        TextStyle(fontFamily: "Livvic",
+                            color: globals.darkModeOn ? Colors.white : Colors
+                                .black),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                            print(newValue);
+                          });
+                        },
+                        items: <String>['Male', 'Female', 'Prefer not to say']
+                            .map<cdd.DropdownMenuItem<String>>((String value) {
+                          return cdd.DropdownMenuItem<String>(
 
-                          value: value,
-                          child: Text(value, style: TextStyle(
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),),
-                        );
-                      }).toList(),
+                            value: value,
+                            child: Text(value, style: TextStyle(
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),),
+                          );
+                        }).toList(),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: SizeConfig.width(10),
-                        bottom: SizeConfig.height(10),
-                        right: SizeConfig.width(10)),
-                    child: TextField(
-                      style: TextStyle(fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .grey),
-                      keyboardType: TextInputType.phone,
-                      controller: _phoneController,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.phone,
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          labelText: "Mobile",
-                          labelStyle: TextStyle(fontFamily: "Livvic",
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          contentPadding: EdgeInsets.all(5.0)),
+                    Container(
+                      margin: EdgeInsets.only(left: SizeConfig.width(10),
+                          bottom: SizeConfig.height(10),
+                          right: SizeConfig.width(10)),
+                      child: TextField(
+                        style: TextStyle(fontFamily: "Livvic",
+                            color: globals.darkModeOn ? Colors.white : Colors
+                                .grey),
+                        keyboardType: TextInputType.phone,
+                        controller: _phoneController,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone,
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            labelText: "Mobile",
+                            labelStyle: TextStyle(fontFamily: "Livvic",
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            contentPadding: EdgeInsets.all(5.0)),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: SizeConfig.width(10),
-                        bottom: SizeConfig.height(10),
-                        right: SizeConfig.width(10)),
-                    child: TextField(
-                      style: TextStyle(fontFamily: "Livvic",
-                          color: globals.darkModeOn ? Colors.white : Colors
-                              .grey),
-                      keyboardType: TextInputType.phone,
-                      controller: _ageController,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person,
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          labelText: "Age",
-                          labelStyle: TextStyle(fontFamily: "Livvic",
-                              color: globals.darkModeOn ? Colors.white : Colors
-                                  .grey),
-                          contentPadding: EdgeInsets.all(5.0)),
+                    Container(
+                      margin: EdgeInsets.only(left: SizeConfig.width(10),
+                          bottom: SizeConfig.height(10),
+                          right: SizeConfig.width(10)),
+                      child: TextField(
+                        style: TextStyle(fontFamily: "Livvic",
+                            color: globals.darkModeOn ? Colors.white : Colors
+                                .grey),
+                        keyboardType: TextInputType.phone,
+                        controller: _ageController,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person,
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            labelText: "Age",
+                            labelStyle: TextStyle(fontFamily: "Livvic",
+                                color: globals.darkModeOn ? Colors.white : Colors
+                                    .grey),
+                            contentPadding: EdgeInsets.all(5.0)),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

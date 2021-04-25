@@ -129,8 +129,9 @@ class _ContentState extends State<Content> {
                     children: List.generate(
                         globals.selectedRecipe.ingredients.length, (index) {
                       return Container(
+                        margin: EdgeInsets.symmetric(vertical: SizeConfig.height(5)),
                         width: SizeConfig.width(330),
-                        height: SizeConfig.height(50),
+                        height: SizeConfig.height(60),
                         child: Text(
                           (index + 1).toString() +
                               ". " +
@@ -198,34 +199,37 @@ class _ContentState extends State<Content> {
             width: SizeConfig.width(340),
             height: SizeConfig.height(590),
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-            child: Column(
-              children: [
-                Text('STEPS',style: TextStyle(
-                    color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold
-                ),),
-                SizedBox(height: 20),
-                Container(
-                  child: ListView(
-                    children: List.generate(
-                        globals.selectedRecipe.recipe.length, (index) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        width: SizeConfig.width(330),
-                        child: Text(
-                          (index + 1).toString() +
-                              ". " +
-                              globals.selectedRecipe.recipe[index],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,fontFamily: 'Livvic'),textAlign: TextAlign.left ,
-                        ),
-                      );
-                    }),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('STEPS',style: TextStyle(
+                      color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold
+                  ),),
+                  SizedBox(height: 20),
+                  Container(
+                    child: ListView(
+                      children: List.generate(
+                          globals.selectedRecipe.recipe.length, (index) {
+                        return Container(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              margin: EdgeInsets.symmetric(vertical: SizeConfig.height(5)),
+                              width: SizeConfig.width(330),
+                              child: Text(
+                                (index + 1).toString() +
+                                    ". " +
+                                    globals.selectedRecipe.recipe[index],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,fontFamily: 'Livvic'),textAlign: TextAlign.left ,
+                              ),
+                            );
+                      }),
+                    ),
+                    height: SizeConfig.height(530),
                   ),
-                  height: SizeConfig.height(500),
-                )
-              ],
+                ],
+              ),
             ),
           ),
           top: 0,
@@ -288,7 +292,7 @@ class _ContentState extends State<Content> {
                                     prefixIcon:
                                     Icon(Icons.search, color: Colors.white),
                                     contentPadding:
-                                    EdgeInsets.only(left: 15.0, top: 15.0),
+                                    EdgeInsets.only(left: 15.0,top: SizeConfig.height(9)),
                                     hintText: 'Search for recipes and channels',
                                     hintStyle: TextStyle(
                                         color: Colors.white, fontSize: 18)),
@@ -356,42 +360,107 @@ class _ContentState extends State<Content> {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               children: <Widget>[
-                                _foodCard(
-                                    globals.recipes[0].name,
-                                    globals.recipes[0].chef_name,
-                                    globals.recipes[0].imageUrl,
-                                    globals.recipes[0].chef_dp),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[0];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[0].name,
+                                      globals.recipes[0].chef_name,
+                                      globals.recipes[0].imageUrl,
+                                      globals.recipes[0].chef_dp),
+                                ),
                                 SizedBox(width: 30.0),
-                                _foodCard(
-                                    globals.recipes[1].name,
-                                    globals.recipes[1].chef_name,
-                                    globals.recipes[1].imageUrl,
-                                    globals.recipes[1].chef_dp),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[1];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[1].name,
+                                      globals.recipes[1].chef_name,
+                                      globals.recipes[1].imageUrl,
+                                      globals.recipes[1].chef_dp),
+                                ),
                                 SizedBox(width: 30.0),
-                                _foodCard(
-                                    globals.recipes[2].name,
-                                    globals.recipes[2].chef_name,
-                                    globals.recipes[2].imageUrl,
-                                    globals.recipes[2].chef_dp),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[2];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[2].name,
+                                      globals.recipes[2].chef_name,
+                                      globals.recipes[2].imageUrl,
+                                      globals.recipes[2].chef_dp),
+                                ),
                                 SizedBox(width: 30.0),
-                                _foodCard(
-                                    globals.recipes[3].name,
-                                    globals.recipes[3].chef_name,
-                                    globals.recipes[3].imageUrl,
-                                    globals.recipes[3].chef_dp),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[3];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[3].name,
+                                      globals.recipes[3].chef_name,
+                                      globals.recipes[3].imageUrl,
+                                      globals.recipes[3].chef_dp),
+                                ),
                                 SizedBox(width: 30.0),
-                                _foodCard(
-                                    globals.recipes[4].name,
-                                    globals.recipes[4].chef_name,
-                                    globals.recipes[4].imageUrl,
-                                    globals.recipes[4].chef_dp),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[4];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[4].name,
+                                      globals.recipes[4].chef_name,
+                                      globals.recipes[4].imageUrl,
+                                      globals.recipes[4].chef_dp),
+                                ),
                                 SizedBox(width: 30.0),
-                                _foodCard(
-                                    globals.recipes[5].name,
-                                    globals.recipes[5].chef_name,
-                                    globals.recipes[5].imageUrl,
-                                    globals.recipes[5].chef_dp),
-                                SizedBox(width: 30.0),
+                                TextButton(
+                                  onPressed: () {
+                                    globals.selectedRecipe =
+                                    globals.recipes[5];
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                              return Content();
+                                            }));
+                                  },
+                                  child: _foodCard(
+                                      globals.recipes[5].name,
+                                      globals.recipes[5].chef_name,
+                                      globals.recipes[5].imageUrl,
+                                      globals.recipes[5].chef_dp),
+                                ),
                               ],
                             ),
                           )
