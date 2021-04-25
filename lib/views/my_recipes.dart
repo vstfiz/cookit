@@ -37,15 +37,15 @@ class _MyRecipesState extends State<MyRecipes> {
                       } else {
                         print(snapshot.data.documents.length);
                         return Column(
-                            children: List.generate(
-                                snapshot.data.documents.length, (index) {
-                              return _foodCard(
-                                  snapshot.data.documents[index]['name'],
-                                  snapshot.data.documents[index]['imageUrl'],
-                                  snapshot.data.documents[index]['chef_name'],
-                                  snapshot.data.documents[index]['chef_dp']);
-                            }),
-                          );
+                          children: List.generate(
+                              snapshot.data.documents.length, (index) {
+                            return _foodCard(
+                                snapshot.data.documents[index]['name'],
+                                snapshot.data.documents[index]['imageUrl'],
+                                snapshot.data.documents[index]['chef_name'],
+                                snapshot.data.documents[index]['chef_dp']);
+                          }),
+                        );
                       }
                     },
                   ),
@@ -59,6 +59,11 @@ class _MyRecipesState extends State<MyRecipes> {
                     width: SizeConfig.width(70),
                     child: IconButton(
                       onPressed: () {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (_) => FunkyOverlay(),
+                        );
                         //add my recipe
                       },
                       icon: Icon(
@@ -79,7 +84,7 @@ class _MyRecipesState extends State<MyRecipes> {
         bottom: true);
   }
 
-  Widget _foodCard(name, url, chef,chef_url) {
+  Widget _foodCard(name, url, chef, chef_url) {
     return Container(
       height: SizeConfig.height(160),
       width: MediaQuery.of(context).size.width - SizeConfig.width(20),
@@ -137,16 +142,14 @@ class _MyRecipesState extends State<MyRecipes> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageBuilder: (context, imageProvider) =>
-                          Container(
-                            height: SizeConfig.height(25),
-                            width: SizeConfig.width(25),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover),
-                                shape: BoxShape.circle),
-                          ),
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: SizeConfig.height(25),
+                        width: SizeConfig.width(25),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover),
+                            shape: BoxShape.circle),
+                      ),
                       placeholder: (context, url) => Center(
                         child: Container(
                           height: SizeConfig.height(25),
@@ -154,11 +157,10 @@ class _MyRecipesState extends State<MyRecipes> {
                           child: CircularProgressIndicator(),
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Icon(
-                            Icons.error,
-                            size: 18,
-                          ),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.error,
+                        size: 18,
+                      ),
                       imageUrl: chef_url,
                     ),
                     SizedBox(width: 10.0),
@@ -171,6 +173,244 @@ class _MyRecipesState extends State<MyRecipes> {
           ],
         ),
         color: Colors.white,
+      ),
+    );
+  }
+}
+
+class FunkyOverlay extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayState();
+}
+
+class FunkyOverlayState extends State<FunkyOverlay>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _chefNameController = new TextEditingController();
+  TextEditingController _ingredientController = new TextEditingController();
+  TextEditingController _recipeController = new TextEditingController();
+  var ingredients = [];
+  var recipe = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            height: SizeConfig.height(800),
+            width: SizeConfig.width(403),
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Stack(
+              children: [
+                Positioned(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  right: 5,
+                ),
+                Positioned(
+                  child: GestureDetector(
+                    onTap: () {
+                      Focus.of(context).unfocus();
+                    },
+                    child: Container(
+                      height: SizeConfig.height(705),
+                      width: SizeConfig.width(393),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: TextField(
+                                controller: _nameController,
+                                style: TextStyle(fontFamily: 'Livvic'),
+                                decoration: InputDecoration(
+                                  labelText: 'Name',
+                                  labelStyle: TextStyle(fontFamily: 'Livvic'),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 2.0)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: TextField(
+                                controller: _chefNameController,
+                                style: TextStyle(fontFamily: 'Livvic'),
+                                decoration: InputDecoration(
+                                  labelText: 'Name',
+                                  labelStyle: TextStyle(fontFamily: 'Livvic'),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 2.0)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: TextField(
+                                controller: _ingredientController,
+                                style: TextStyle(fontFamily: 'Livvic'),
+                                decoration: InputDecoration(
+                                  labelText: 'Name',
+                                  labelStyle: TextStyle(fontFamily: 'Livvic'),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 2.0)),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  var newList = ingredients;
+                                  newList.add(_ingredientController.text);
+                                  setState(() {
+                                    ingredients = newList;
+                                  });
+                                  _ingredientController.clear();
+                                },
+                                child: Text(
+                                  'Add Ingredient',
+                                  style: TextStyle(fontFamily: 'Livvic'),
+                                )),
+                            Container(
+                              height: SizeConfig.height(100),
+                              width: SizeConfig.width(383),
+                              child: ListView(
+                                children:
+                                    List.generate(ingredients.length, (index) {
+                                  return Container(
+                                    width: SizeConfig.width(383),
+                                    height: SizeConfig.height(20),
+                                    child: Text(
+                                      '${index}. ${ingredients[index]}',
+                                      style: TextStyle(
+                                          fontFamily: 'Livvic', fontSize: 18),
+                                      softWrap: true,
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: TextField(
+                                controller: _recipeController,
+                                style: TextStyle(fontFamily: 'Livvic'),
+                                decoration: InputDecoration(
+                                  labelText: 'Recipe Steps',
+                                  labelStyle: TextStyle(fontFamily: 'Livvic'),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 2.0)),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  var newList = recipe;
+                                  newList.add(_recipeController.text);
+                                  setState(() {
+                                    recipe = newList;
+                                  });
+                                  _recipeController.clear();
+                                },
+                                child: Text(
+                                  'Add Recipe Step',
+                                  style: TextStyle(fontFamily: 'Livvic'),
+                                )),
+                            Container(
+                              height: SizeConfig.height(100),
+                              width: SizeConfig.width(383),
+                              child: ListView(
+                                children:
+                                    List.generate(recipe.length, (index) {
+                                  return Container(
+                                    width: SizeConfig.width(383),
+                                    height: SizeConfig.height(27),
+                                    child:
+                                        Text(
+                                          '${index}. ${recipe[index]}\n',
+                                          style: TextStyle(
+                                              fontFamily: 'Livvic',
+                                              fontSize: 18),
+                                          softWrap: true,
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  bottom: SizeConfig.height(60),
+                  top: SizeConfig.height(35),
+                  left: 5,
+                ),
+                Positioned(
+                  left: 5,
+                  child: Container(
+                    width: SizeConfig.width(393),
+                    height: SizeConfig.height(50),
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  bottom: 5,
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
