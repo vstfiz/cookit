@@ -44,7 +44,7 @@ class _SearchingState extends State<Searching> {
           print(queryResults.length);
         }
         queryResults.forEach((result) {
-          if (result['name'].startsWith(searchQuery)) {
+          if (result['name'].toLowerCase().startsWith(searchQuery.toLowerCase())) {
             setState(() {
               tempStorage.add(result);
               print(tempStorage.length);
@@ -56,7 +56,7 @@ class _SearchingState extends State<Searching> {
 //      print('condition else');
       tempStorage = [];
       queryResults.forEach((result) {
-        if (result['name'].startsWith(searchQuery)) {
+        if (result['name'].toLowerCase().startsWith(searchQuery.toLowerCase())) {
           setState(() {
             tempStorage.add(result);
             print(tempStorage.length);
@@ -134,11 +134,11 @@ class _SearchingState extends State<Searching> {
                       child: ListView(
                         children: tempStorage.map((value) {
                           return Container(
+                            width:SizeConfig.width(330),
                               height: SizeConfig.height(60),
                               padding: EdgeInsets.only(
                                   left: SizeConfig.width(20),
                                   top: SizeConfig.height(20)),
-                              width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: globals.darkModeOn
                                     ? Colors.grey[800]
@@ -171,17 +171,20 @@ class _SearchingState extends State<Searching> {
                                     SizedBox(
                                       width: SizeConfig.width(15),
                                     ),
-                                    Text(
-                                      value['name'],
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: "Livvic",
-                                        color: globals.darkModeOn
-                                            ? Colors.white
-                                            : Colors.grey,
+                                    Container(
+                                      width: SizeConfig.width(330),
+                                      child: Text(
+                                        value['name'],
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: "Livvic",
+                                          color: globals.darkModeOn
+                                              ? Colors.white
+                                              : Colors.grey,
+                                        ),softWrap: true,
+                                        textAlign: TextAlign.start,
                                       ),
-                                      textAlign: TextAlign.start,
-                                    ),
+                                    )
                                   ],
                                 ),
                               ));
