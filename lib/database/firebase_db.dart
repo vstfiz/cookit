@@ -135,4 +135,21 @@ class FirebaseDB {
     print(k);
     globals.count = k;
   }
+
+  static Future<bool> addRecipe(Recipe rec) async {
+    Firestore firestore = Firestore.instance;
+    var ref = firestore.collection('recipes');
+    Map<String, dynamic> recipeData = new Map<String, dynamic>();
+    recipeData.putIfAbsent('name', () => rec.name);
+    recipeData.putIfAbsent('chef_name', () => rec.chef_name);
+    recipeData.putIfAbsent('ingredients', () => rec.ingredients);
+    recipeData.putIfAbsent('recipe', () => rec.recipe);
+    recipeData.putIfAbsent('imageUrl', () => rec.imageUrl);
+    recipeData.putIfAbsent('chef_dp', () => rec.chef_dp);
+    recipeData.putIfAbsent('reference', () => globals.user.uid);
+    recipeData.putIfAbsent('key', () => rec.name.characters.first);
+    print(rec.toString());
+    ref.add(recipeData);
+  }
+
 }

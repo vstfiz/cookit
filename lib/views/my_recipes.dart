@@ -1,9 +1,18 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cookit/custom/globals.dart';
+import 'package:cookit/model/recipe.dart';
 import 'package:cookit/util/size_config.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cookit/custom/globals.dart' as globals;
+import 'package:cookit/database/firebase_db.dart' as fdb;
 
 class MyRecipes extends StatefulWidget {
   @override
@@ -192,7 +201,10 @@ class FunkyOverlayState extends State<FunkyOverlay>
   TextEditingController _ingredientController = new TextEditingController();
   TextEditingController _recipeController = new TextEditingController();
   var ingredients = [];
+  File _image;
+  File _chefImage;
   var recipe = [];
+  String uploadedImageUrl;
 
   @override
   void initState() {
@@ -208,6 +220,60 @@ class FunkyOverlayState extends State<FunkyOverlay>
     });
 
     controller.forward();
+  }
+
+  Future getCameraImage1() async {
+    final picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+    print("Path Value : " + _image.path);
+  }
+
+  Future getGalleryImage1() async {
+    final picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
+  Future getCameraImage2() async {
+    final picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _chefImage = File(pickedFile.path);
+    });
+    print("Path Value : " + _image.path);
+  }
+
+  Future getGalleryImage2() async {
+    final picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _chefImage = File(pickedFile.path);
+    });
+  }
+
+  Future<String> uploadImage(File val) async {
+    print("image upload running");
+    final StorageReference ref = FirebaseStorage.instance.ref().child(
+        'users/${globals.mainUser.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg');
+    final StorageUploadTask uploadTask = ref.put(val);
+    await uploadTask.onComplete;
+    var uri = await ref.getDownloadURL();
+    uploadedImageUrl = uri.toString();
+    print(uploadedImageUrl);
+    return uploadedImageUrl;
   }
 
   @override
@@ -277,7 +343,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 controller: _chefNameController,
                                 style: TextStyle(fontFamily: 'Livvic'),
                                 decoration: InputDecoration(
-                                  labelText: 'Name',
+                                  labelText: 'Chef\'s Name',
+                                  hintText: globals.mainUser.name,
+                                  hintStyle: TextStyle(fontFamily: 'Livvic'),
                                   labelStyle: TextStyle(fontFamily: 'Livvic'),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -295,7 +363,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 controller: _ingredientController,
                                 style: TextStyle(fontFamily: 'Livvic'),
                                 decoration: InputDecoration(
-                                  labelText: 'Name',
+                                  labelText: 'Ingredient',
                                   labelStyle: TextStyle(fontFamily: 'Livvic'),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -370,23 +438,104 @@ class FunkyOverlayState extends State<FunkyOverlay>
                               height: SizeConfig.height(100),
                               width: SizeConfig.width(383),
                               child: ListView(
-                                children:
-                                    List.generate(recipe.length, (index) {
+                                children: List.generate(recipe.length, (index) {
                                   return Container(
                                     width: SizeConfig.width(383),
                                     height: SizeConfig.height(27),
-                                    child:
-                                        Text(
-                                          '${index}. ${recipe[index]}\n',
-                                          style: TextStyle(
-                                              fontFamily: 'Livvic',
-                                              fontSize: 18),
-                                          softWrap: true,
+                                    child: Text(
+                                      '${index}. ${recipe[index]}\n',
+                                      style: TextStyle(
+                                          fontFamily: 'Livvic', fontSize: 18),
+                                      softWrap: true,
                                     ),
                                   );
                                 }),
                               ),
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: Row(
+                                children: [
+                                  Text('Food\'s Image:'),
+                                  SizedBox(
+                                    width: SizeConfig.width(60),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey.withOpacity(0.5)),
+                                    width: SizeConfig.width(60),
+                                    child: IconButton(
+                                        onPressed: getCameraImage1,
+                                        icon: Icon(Icons.camera_alt)),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.width(60),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey.withOpacity(0.5)),
+                                    width: SizeConfig.width(60),
+                                    child: IconButton(
+                                        onPressed: getGalleryImage1,
+                                        icon: Icon(Icons.camera)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            _image != null
+                                ? Text(
+                                    'Image Selected',
+                                    style: TextStyle(fontFamily: 'Livvic'),
+                                  )
+                                : SizedBox(),
+                            SizedBox(
+                              height: SizeConfig.height(20),
+                            ),
+                            Container(
+                              height: SizeConfig.height(45),
+                              width: SizeConfig.width(383),
+                              child: Row(
+                                children: [
+                                  Text('Chef\'s Image:'),
+                                  SizedBox(
+                                    width: SizeConfig.width(60),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey.withOpacity(0.5)),
+                                    width: SizeConfig.width(60),
+                                    child: IconButton(
+                                        onPressed: getCameraImage2,
+                                        icon: Icon(Icons.camera_alt)),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.width(60),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey.withOpacity(0.5)),
+                                    width: SizeConfig.width(60),
+                                    child: IconButton(
+                                        onPressed: getGalleryImage2,
+                                        icon: Icon(Icons.camera)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            _chefImage != null
+                                ? Text(
+                                    'Image Selected',
+                                    style: TextStyle(fontFamily: 'Livvic'),
+                                  )
+                                : SizedBox()
                           ],
                         ),
                       ),
@@ -394,13 +543,29 @@ class FunkyOverlayState extends State<FunkyOverlay>
                   ),
                   bottom: SizeConfig.height(60),
                   top: SizeConfig.height(35),
-                  left: 5,
+                  left: SizeConfig.height(5),
                 ),
                 Positioned(
                   left: 5,
                   child: Container(
                     width: SizeConfig.width(393),
                     height: SizeConfig.height(50),
+                    child: TextButton(
+                      onPressed: () {
+                        uploadRecipe(_nameController.text,
+                            _chefNameController.text, ingredients, recipe);
+                      },
+                      child: Center(
+                        child: Text(
+                          'UPLOAD',
+                          style: TextStyle(
+                              fontFamily: 'Livvic',
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
                     decoration: BoxDecoration(
                         color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(10)),
@@ -413,5 +578,63 @@ class FunkyOverlayState extends State<FunkyOverlay>
         ),
       ),
     );
+  }
+
+  Future<void> _loadingDialog() {
+    return showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            backgroundColor: Colors.white,
+            content: Container(
+                height: SizeConfig.height(60),
+                child: Center(
+                  child: Row(
+                    children: <Widget>[
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      ),
+                      SizedBox(
+                        width: SizeConfig.width(20),
+                      ),
+                      Text(
+                        "Uploading Data...",
+                        style: TextStyle(
+                            fontFamily: "Livvic",
+                            fontSize: 23,
+                            letterSpacing: 1),
+                      )
+                    ],
+                  ),
+                ))));
+  }
+
+  uploadRecipe(name, chef, ingredients, recipe) async {
+    _loadingDialog();
+    if(name != null && name != ''){
+      if(chef != null && chef != ''){
+        if(ingredients != null && ingredients.length != 0){
+          if(ingredients != null && ingredients.length != 0){
+            if(_image!= null){
+              if(_chefImage!= null){
+                String imageUrl = await uploadImage(_image);
+                String chef_dp = await uploadImage(_chefImage);
+                Recipe rec = new Recipe(name, chef, globals.mainUser.uid, imageUrl, ingredients, chef_dp, recipe);
+                await fdb.FirebaseDB.addRecipe(rec);
+                print('uploaded');
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Fluttertoast.showToast(msg: 'Recipe Uploaded Successfully',toastLength: Toast.LENGTH_LONG);
+
+              }
+              else{}
+            }
+          }
+        }
+      }
+    }
+    else{}
   }
 }
