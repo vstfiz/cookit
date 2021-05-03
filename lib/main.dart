@@ -1,24 +1,15 @@
 import 'dart:async';
-
 import 'package:cookit/authentication/fire_auth.dart';
 import 'package:cookit/database/firebase_db.dart' as fdb;
 import 'package:cookit/custom/globals.dart' as globals;
-import 'package:cookit/util/responsiveui.dart';
 import 'package:cookit/util/size_config.dart';
 import 'package:cookit/util/size_config1.dart' as s1;
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cookit/views/content.dart';
-import 'package:cookit/views/dashboard.dart';
-import 'package:cookit/views/edit_profile.dart';
-import 'package:cookit/views/my_recipes.dart';
-import 'package:cookit/views/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:cookit/views/login.dart';
 
 void main() {
