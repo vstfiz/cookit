@@ -115,7 +115,7 @@ Display		                  :	  1280 x 800 minimum screen resolution.
 
 										# Some Screenshots
 
-![Screen Image 1](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/2.jpg | width = 180 | height = 360)
+![Screen Image 1](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/2.jpg | width=180 | height=360)
 ![Screen Image 2](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/4.jpg)
 ![Screen Image 3](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/8.jpg)
 ![Screen Image 4](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/9.jpg)
