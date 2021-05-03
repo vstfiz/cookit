@@ -1,11 +1,11 @@
 # CookiT
 
 
-Submitted By:
-Name/Branch/Section/Roll No)                                                Submitted To :
-Mr. Akarsh Singh Gangwar(CS/Sec- D(04)/181500055)                      Mr. Anand Prakash Gupta
-Mr. Vivek Sharma (CS/Sec-G(89)/181500820)                               (Technical Trainer, CS)
-Mr. Rushtam Singh(CS/Sec-I(29)/181500597)                               GLA University, Mathura.
+Submitted By:<br>
+(Name/Branch/Section/Roll No)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submitted To :<br>
+Mr. Akarsh Singh Gangwar(CS/Sec- D(04)/181500055)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr. Anand Prakash Gupta<br>
+Mr. Vivek Sharma (CS/Sec-G(89)/181500820)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Technical Trainer, CS)<br>
+Mr. Rushtam Singh(CS/Sec-I(29)/181500597)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLA University, Mathura.<br>
 
 
                                                   # About the Project: 
@@ -109,3 +109,28 @@ Hard disk		                :	  4 GB of available disk space minimum (500 MB for 
                        	 	 	  GB for Android SDK and emulator system image)
 
 Display		                  :	  1280 x 800 minimum screen resolution.
+
+
+
+
+										# Some Screenshots
+
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/2.jpg" width="250" height="500">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/4.jpg" width="250" height="500">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/8.jpg" width="250" height="500">
+
+
+
+
+
+
+
+
+
+
+
+
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/9.jpg" width="250" height="500">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/10.jpg" width="250" height="500">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/1.jpg" width="250" height="500">
+
+
+
+
+Image Coutsey :- https://www.freepik.com
