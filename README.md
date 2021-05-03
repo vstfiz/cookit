@@ -115,9 +115,9 @@ Display		                  :	  1280 x 800 minimum screen resolution.
 
 										# Some Screenshots
 
-<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/4.jpg" width="180" height="360">
-![Screen Image 2](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/4.jpg)
-![Screen Image 3](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/8.jpg)
-![Screen Image 4](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/9.jpg)
-![Screen Image 5](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/10.jpg)
-![Screen Image 6](https://github.com/vstfiz/cookit/blob/master/assets/screenshots/1.jpg)
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/2.jpg" width="250" height="500">
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/4.jpg" width="250" height="500">
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/8.jpg" width="250" height="500">
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/9.jpg" width="250" height="500">
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/10.jpg" width="250" height="500">
+<img src="https://github.com/vstfiz/cookit/blob/master/assets/screenshots/1.jpg" width="250" height="500">
