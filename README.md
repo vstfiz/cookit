@@ -9,12 +9,12 @@ Mr. Rushtam Singh(CS/Sec-I(29)/181500597)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
 
 
 
-Final Release apk available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/apk_release.apk 
-Website hosted at :- https://cookit-a48d6.web.app/
-Final Video Release available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_video.mp4
-Final Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_report_mini_project_II.docx.pdf
-Mid Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/mid_report_mini_project_II.docx.pdf
-Final Synopsis available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/Synopsis_Cooking_Recipes_VI_Semester.pdf
+Final Release apk available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/apk_release.apk<br> 
+Website hosted at :- https://cookit-a48d6.web.app/<br>
+Final Video Release available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_video.mp4<br>
+Final Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_report_mini_project_II.docx.pdf<br>
+Mid Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/mid_report_mini_project_II.docx.pdf<br>
+Final Synopsis available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/Synopsis_Cooking_Recipes_VI_Semester.pdf<br>
 
 
 
