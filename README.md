@@ -8,7 +8,17 @@ Mr. Vivek Sharma (CS/Sec-G(89)/181500820)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
 Mr. Rushtam Singh(CS/Sec-I(29)/181500597)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLA University, Mathura.<br>
 
 
-                                                  # About the Project: 
+
+Final Release apk available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/apk_release.apk 
+Website hosted at :- https://cookit-a48d6.web.app/
+Final Video Release available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_video.mp4
+Final Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/final_report_mini_project_II.docx.pdf
+Mid Term Report available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/mid_report_mini_project_II.docx.pdf
+Final Synopsis available at :- https://github.com/vstfiz/cookit/blob/master/final_submission/Synopsis_Cooking_Recipes_VI_Semester.pdf
+
+
+
+`										# About the Project: 
 
 The advancement in technology has made our lives easy like never before.  Everything that we require is available at our fingertips. With few taps on our smartphones, we can complete tasks in minimal time.
  
